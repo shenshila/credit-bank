@@ -8,11 +8,11 @@ import java.time.LocalDate;
 
 @Data
 public class FinishRegistrationRequestDto {
-    Gender gender;
-    MaritalStatus maritalStatus;
-    Integer dependentAmount;
-    LocalDate passportIssueDate;
-    String passportIssueBranch;
-    EmploymentDto employment;
-    String accountNumber;
+    private Gender gender;
+    private MaritalStatus maritalStatus;
+    private Integer dependentAmount;
+    private LocalDate passportIssueDate;
+    private String passportIssueBranch;
+    private EmploymentDto employment;
+    private String accountNumber;
 }

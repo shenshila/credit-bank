@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class StatementStatusHistoryDto {
-    Status status;
-    LocalDateTime time;
-    ChangeType changeType;
+    private Status status;
+    private LocalDateTime time;
+    private ChangeType changeType;
 }

@@ -9,21 +9,21 @@ import java.time.LocalDate;
 
 @Data
 public class ScoringDataDto {
-    BigDecimal amount;
-    Integer term;
-    String firstName;
-    String lastName;
-    String middleName;
-    Gender gender;
-    LocalDate birthDate;
-    String passportSeries;
-    String passportNumber;
-    LocalDate passportIssueDate;
-    String passportIssueBranch;
-    MaritalStatus maritalStatus;
-    Integer dependentAmount;
-    EmploymentDto employment;
-    String accountNumber;
-    Boolean isInsuranceEnabled;
-    Boolean isSalaryClient;
+    private BigDecimal amount;
+    private Integer term;
+    private String firstName;
+    private String lastName;
+    private String middleName;
+    private Gender gender;
+    private LocalDate birthDate;
+    private String passportSeries;
+    private String passportNumber;
+    private LocalDate passportIssueDate;
+    private String passportIssueBranch;
+    private MaritalStatus maritalStatus;
+    private Integer dependentAmount;
+    private EmploymentDto employment;
+    private String accountNumber;
+    private Boolean isInsuranceEnabled;
+    private Boolean isSalaryClient;
 }

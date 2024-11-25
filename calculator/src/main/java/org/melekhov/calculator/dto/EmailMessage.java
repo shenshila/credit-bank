@@ -5,8 +5,8 @@ import org.melekhov.calculator.dto.enums.Theme;
 
 @Data
 public class EmailMessage {
-    String address;
-    Theme theme;
-    Long statementId;
-    String text;
+    private String address;
+    private Theme theme;
+    private Long statementId;
+    private String text;
 }

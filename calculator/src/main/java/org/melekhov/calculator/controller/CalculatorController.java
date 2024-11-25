@@ -6,12 +6,16 @@ import org.melekhov.calculator.dto.LoanStatementRequestDto;
 import org.melekhov.calculator.dto.ScoringDataDto;
 import org.melekhov.calculator.service.CalculatorService;
 import org.melekhov.calculator.service.OfferService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController("calculator")
+@RestController()
+@RequestMapping("/controller")
 public class CalculatorController {
 
     CalculatorService calculatorService;
@@ -23,13 +27,15 @@ public class CalculatorController {
     }
 
     @PostMapping("offers")
-    public List<LoanOfferDto> offers(LoanStatementRequestDto statementRequest) {
-        return offerService.createOffers(statementRequest);
+    public ResponseEntity<List<LoanOfferDto>> offers(LoanStatementRequestDto statementRequest) {
+        ResponseEntity<List<LoanOfferDto>> response = offerService.getOffers(statementRequest);
+        return response;
     }
 
-    @PostMapping("calc")
-    public CreditDto calc(ScoringDataDto scoringData) {
-        return calculatorService.calc(scoringData);
-    }
+//    @PostMapping("calc")
+//    public ResponseEntity<CreditDto> calc(ScoringDataDto scoringData) {
+//        ResponseEntity<CreditDto> response = calculatorService.calc(scoringData);
+//        return response;
+//    }
 
 }
