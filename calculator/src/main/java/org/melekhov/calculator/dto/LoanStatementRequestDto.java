@@ -11,7 +11,9 @@ import java.time.LocalDate;
 
 @Data
 public class LoanStatementRequestDto {
+    @JsonProperty("amount")
     private BigDecimal amount;
+    @JsonProperty("term")
     private Integer term;
     private String firstName;
     private String lastName;
