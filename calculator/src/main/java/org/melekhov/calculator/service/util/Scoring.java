@@ -4,11 +4,13 @@ import org.melekhov.calculator.dto.EmploymentDto;
 import org.melekhov.calculator.dto.ScoringDataDto;
 import org.melekhov.calculator.dto.enums.Gender;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
 
+@Component
 public class Scoring {
 
     @Value("${base.rate}")

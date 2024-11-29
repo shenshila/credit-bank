@@ -35,21 +35,21 @@ public class CreditServiceImpl implements CreditService {
     private ResponseEntity<CreditDto> calcCredit(ScoringDataDto scoringData) {
         credit = new CreditDto();
 
-        credit.setTerm(scoringData.getTerm()); // Срок кредита
-        credit.setIsSalaryClient(scoringData.getIsSalaryClient()); // Страхование
-        credit.setIsInsuranceEnabled(scoringData.getIsInsuranceEnabled()); // Клиент банка
+        credit.setTerm(scoringData.getTerm());
+        credit.setIsSalaryClient(scoringData.getIsSalaryClient());
+        credit.setIsInsuranceEnabled(scoringData.getIsInsuranceEnabled());
 
         BigDecimal rate = scoring.calcRate(scoringData, BASE_RATE);
         BigDecimal principal = calculator.calcPrincipal(scoringData.getAmount(), scoringData.getIsInsuranceEnabled()); // Сумма кредита с учетом страховки
         BigDecimal monthlyPayment = calculator.calcMonthlyPayment(principal, rate, scoringData.getTerm());
         BigDecimal totalAmount = calculator.calcTotalAmount(monthlyPayment, scoringData.getTerm());
 
-        credit.setAmount(totalAmount); // Сумма кредита
-        credit.setMonthlyPayment(monthlyPayment); // Ежемесячный платеж
-        credit.setRate(rate); // Ставка
-        credit.setPsk(calcPsk(totalAmount, scoringData.getAmount())); // Сумма затрат заемщика
+        credit.setAmount(totalAmount);
+        credit.setMonthlyPayment(monthlyPayment);
+        credit.setRate(rate);
+        credit.setPsk(calcPsk(totalAmount, scoringData.getAmount()));
 
-        createPaymentSchedule(scoringData, principal); // График платежей
+        createPaymentSchedule(scoringData, principal);
 
         return ResponseEntity.ok(credit);
     }
@@ -57,11 +57,11 @@ public class CreditServiceImpl implements CreditService {
     private void createPaymentSchedule(ScoringDataDto scoringData, BigDecimal principal) {
         BigDecimal remainingDebt = principal;
         for (int i = 0; i < credit.getTerm(); i++) {
-            LocalDate paymentDate = LocalDate.now().plusMonths(i); // Дата платежа
-            BigDecimal totalPayment = credit.getMonthlyPayment(); // сумма платежа
-            BigDecimal interestPayment = remainingDebt.multiply(credit.getRate().setScale(2, RoundingMode.HALF_UP)); // выплата процентов
-            BigDecimal debtPayment = credit.getMonthlyPayment().subtract(interestPayment).setScale(2, RoundingMode.HALF_UP); // выплата долга
-            remainingDebt = remainingDebt.subtract(debtPayment); // оставшийся долг
+            LocalDate paymentDate = LocalDate.now().plusMonths(i);
+            BigDecimal totalPayment = credit.getMonthlyPayment();
+            BigDecimal interestPayment = remainingDebt.multiply(credit.getRate().setScale(2, RoundingMode.HALF_UP));
+            BigDecimal debtPayment = credit.getMonthlyPayment().subtract(interestPayment).setScale(2, RoundingMode.HALF_UP);
+            remainingDebt = remainingDebt.subtract(debtPayment);
 
             credit.addPaymentScheduleElement(new PaymentScheduleElementDto(
                     i + 1, paymentDate, totalPayment, interestPayment, debtPayment, remainingDebt));
