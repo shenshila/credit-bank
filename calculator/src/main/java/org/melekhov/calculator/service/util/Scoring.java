@@ -95,7 +95,7 @@ public class Scoring {
         switch (employment.getEmploymentStatus()) {
             case SELF_EMPLOYED -> finalRate.add(BigDecimal.valueOf(2));
             case BUSINESS_OWNER -> finalRate.add(BigDecimal.valueOf(1));
-            case UNEMPLOYED -> throw new IllegalArgumentException("Employment status is unemployed");
+            case UNEMPLOYED -> throw new IllegalArgumentException("Refusal due to unemployed");
         }
 
     }

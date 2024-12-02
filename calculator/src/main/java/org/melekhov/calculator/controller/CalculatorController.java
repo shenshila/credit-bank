@@ -38,13 +38,6 @@ public class CalculatorController {
     @Operation(
             summary = " Getting Offers",
             description = "Предоставление кредитных предложений")
-//    @ApiResponse(value = {
-//            @ApiResponse(responseCode = "200", description = "Успешное подключение",
-//                    content = @Content(mediaType = "application/json",
-//                        array = @ArraySchema(schema = @Schema(implementation = LoanOfferDto.class),
-//                            minItems = 4,
-//                            maxItems = 4)))
-//    })
     @PostMapping("/offers")
     public ResponseEntity<List<LoanOfferDto>> offers(@Valid @RequestBody @Parameter(description = "Кредитная выписка", required = true)
                                                          LoanStatementRequestDto statementRequest) {

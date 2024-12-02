@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
-public class LoanStatementRequestDto {
+public class    LoanStatementRequestDto {
 
     @NotNull(message = "Amount cannot be null")
     @DecimalMin(value = "20000", message = "Amount must be greater than 20000")
@@ -57,4 +57,8 @@ public class LoanStatementRequestDto {
     @Schema(description = "Номер пасспорта", example = "1234123412")
     private String passportNumber;
 
+    public LoanStatementRequestDto() {};
+
+    public LoanStatementRequestDto(BigDecimal bigDecimal, int i, String ivan, String ivanov, String ivanovich, String mail, LocalDate of, String number, String number1) {
+    }
 }
