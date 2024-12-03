@@ -1,23 +1,27 @@
-package org.melekhov.calculator.service.util;
+package org.melekhov.calculator.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import org.melekhov.calculator.dto.EmploymentDto;
 import org.melekhov.calculator.dto.ScoringDataDto;
 import org.melekhov.calculator.dto.enums.Gender;
+import org.melekhov.calculator.service.ScoringService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
 
-@Component
-public class Scoring {
+@Service
+@RequiredArgsConstructor
+public class ScoringServiceImpl implements ScoringService {
 
     @Value("${base.rate}")
     private BigDecimal finalRate;
 
+    @Override
     public BigDecimal calcRate(ScoringDataDto scoringData, BigDecimal rate) {
-
         this.finalRate = rate;
 
         checkEmploymentStatus(scoringData);
@@ -99,6 +103,5 @@ public class Scoring {
         }
 
     }
-
 
 }
