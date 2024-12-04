@@ -74,7 +74,7 @@ public class ScoringDataDto {
 
     @NotNull(message = "dependentAmount cannot be null")
     @Positive
-    @Schema(example = "234444.23")
+    @Schema(example = "4")
     private Integer dependentAmount;
 
     @NotNull(message = "employment cannot be null")
