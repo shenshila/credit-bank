@@ -15,8 +15,7 @@ import java.util.List;
 public class CreditDto {
 
     @NotNull(message = "Amount cannot be null")
-    @DecimalMin(value = "20000", message = "Amount must be greater than 20000")
-    @DecimalMax(value = "1000000")
+    @Size(min = 20000, max = 10000000, message = "Amount must be greater than 20000 and less 10000000")
     @Schema(description = "Полная сумма кредита", example = "456253.27")
     private BigDecimal amount;
 
@@ -50,7 +49,6 @@ public class CreditDto {
     @Schema(description = "Является ли зарплатным клиентом", example = "false")
     private Boolean isSalaryClient;
 
-    @NotNull(message = "paymentSchedule cannot be null")
     @Size(min = 6, message = "paymentSchedule must contain at least six elements")
     @Schema(description = "График платежей")
     private List<@Valid PaymentScheduleElementDto> paymentSchedule;

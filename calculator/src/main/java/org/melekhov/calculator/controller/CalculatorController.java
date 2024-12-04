@@ -39,7 +39,8 @@ public class CalculatorController {
     public ResponseEntity<CreditDto> calculateCredit(@Valid @RequestBody @Parameter(description = "Данные для оценки платежеспособности клиента", required = true)
                                               ScoringDataDto scoringData) {
         log.info("Received loan offer request: {}", scoringData);
-        return offerService.calculateCredit(scoringData);
+        CreditDto creditDto = offerService.calculateCredit(scoringData).getBody();
+        return ResponseEntity.status(HttpStatus.OK).body(creditDto);
     }
 
 }

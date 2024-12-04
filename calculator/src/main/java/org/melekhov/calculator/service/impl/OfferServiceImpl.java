@@ -82,7 +82,7 @@ public class OfferServiceImpl implements OfferService {
                 .build();
     }
 
-    public BigDecimal calcRate(ScoringDataDto scoringData, BigDecimal baseRate) {
+    private BigDecimal calcRate(ScoringDataDto scoringData, BigDecimal baseRate) {
         log.debug("Calculating rate for credit: scoring data: {}, base rate: {}", scoringData, baseRate);
 
         scoringService = new ScoringServiceImpl();
@@ -92,7 +92,7 @@ public class OfferServiceImpl implements OfferService {
         return rate;
     }
 
-    public BigDecimal calcRate(boolean isInsuranceEnabled, boolean isSalaryClient) {
+    private BigDecimal calcRate(boolean isInsuranceEnabled, boolean isSalaryClient) {
         log.debug("calculating Rate: isInsuranceEnabled: {}, isSalaryClient: {}", isInsuranceEnabled, isSalaryClient);
 
         BigDecimal rate = BASE_RATE;
@@ -104,7 +104,7 @@ public class OfferServiceImpl implements OfferService {
         return rate;
     }
 
-    public BigDecimal calcMonthlyPayment(BigDecimal totalAmount, BigDecimal rate, Integer term) {
+    private BigDecimal calcMonthlyPayment(BigDecimal totalAmount, BigDecimal rate, Integer term) {
         log.debug("Calculating monthly payment: totalAmount: {}, rate: {}, term: {}", totalAmount, rate, term);
 
         BigDecimal monthlyRate = rate
@@ -121,14 +121,14 @@ public class OfferServiceImpl implements OfferService {
         return monthlyPayment;
     }
 
-    public BigDecimal calcTotalAmount(BigDecimal amount, Boolean isInsuranceEnabled) {
+    private BigDecimal calcTotalAmount(BigDecimal amount, Boolean isInsuranceEnabled) {
         if (isInsuranceEnabled) return amount.add(INSURANCE);
 
         log.info("Calculated total amount: amount: {}", amount);
         return amount;
     }
 
-    public BigDecimal calcPsk(BigDecimal totalAmount, BigDecimal monthlyPayment, Integer term) {
+    private BigDecimal calcPsk(BigDecimal totalAmount, BigDecimal monthlyPayment, Integer term) {
         BigDecimal totalPayment = monthlyPayment.multiply(BigDecimal.valueOf(term));
 
         log.info("Calculated psk");
@@ -138,7 +138,7 @@ public class OfferServiceImpl implements OfferService {
                 .multiply(BigDecimal.valueOf(100));
     }
 
-    public List<PaymentScheduleElementDto> calculatePaymentSchedule(Integer term, BigDecimal totalAmount, BigDecimal rate, BigDecimal monthlyPayment) {
+    private List<PaymentScheduleElementDto> calculatePaymentSchedule(Integer term, BigDecimal totalAmount, BigDecimal rate, BigDecimal monthlyPayment) {
         List<PaymentScheduleElementDto> paymentSchedule = new ArrayList<>();
 
         BigDecimal monthlyRate = rate
