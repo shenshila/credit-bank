@@ -30,7 +30,7 @@ public class OfferServiceImpl implements OfferService {
     public ResponseEntity<CreditDto> calculateCredit(ScoringDataDto scoringData) {
         log.info("Starting calculate credit for scoring data: {}", scoringData);
 
-        BigDecimal rate = calcRate(scoringData, BASE_RATE);
+        BigDecimal rate = calcRate(scoringData, calcRate(scoringData.getIsInsuranceEnabled(), scoringData.getIsSalaryClient()));
         BigDecimal totalAmount = calcTotalAmount(scoringData.getAmount(), scoringData.getIsInsuranceEnabled());
         BigDecimal monthlyPayment = calcMonthlyPayment(totalAmount, rate, scoringData.getTerm());
         BigDecimal psk = calcPsk(totalAmount, monthlyPayment, scoringData.getTerm());

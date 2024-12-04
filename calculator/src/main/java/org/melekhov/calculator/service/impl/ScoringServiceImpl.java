@@ -39,7 +39,7 @@ public class ScoringServiceImpl implements ScoringService {
         EmploymentDto employment = scoringData.getEmployment();
 
         if (employment.getWorkExperienceTotal() < 18 || employment.getWorkExperienceCurrent() < 3) {
-            throw new IllegalArgumentException("xxhxsdf");
+            throw new IllegalArgumentException("WorkExperienceTotal most be greatest than 18 and WorkExperienceCurrent most be less than 3");
         }
     }
 
@@ -48,11 +48,11 @@ public class ScoringServiceImpl implements ScoringService {
         int years = age.getYears();
 
         if (scoringData.getGender() == Gender.FEMALE && years > 32 && years < 60) {
-            finalRate = finalRate.subtract(BigDecimal.valueOf(3));
+            finalRate = finalRate = finalRate.subtract(BigDecimal.valueOf(3));
         } else if (scoringData.getGender() == Gender.MALE && years > 30 && years < 55) {
-            finalRate = finalRate.subtract(BigDecimal.valueOf(3));
+            finalRate = finalRate = finalRate.subtract(BigDecimal.valueOf(3));
         } else if (scoringData.getGender() == Gender.UNKNOWN) {
-            finalRate = finalRate.add(BigDecimal.valueOf(7));
+            finalRate = finalRate = finalRate.add(BigDecimal.valueOf(7));
         }
     }
 
@@ -66,8 +66,8 @@ public class ScoringServiceImpl implements ScoringService {
 
     private void checkMaritalStatus(ScoringDataDto scoringData) {
         switch (scoringData.getMaritalStatus()) {
-            case MARRIED -> finalRate.subtract(BigDecimal.valueOf(3));
-            case SINGLE -> finalRate.add(BigDecimal.ONE);
+            case MARRIED -> finalRate = finalRate.subtract(BigDecimal.valueOf(3));
+            case SINGLE -> finalRate = finalRate.add(BigDecimal.ONE);
         }
 
     }
@@ -87,8 +87,8 @@ public class ScoringServiceImpl implements ScoringService {
         EmploymentDto employment = scoringData.getEmployment();
 
         switch (employment.getPosition()) {
-            case MANAGER -> finalRate.subtract(BigDecimal.valueOf(2));
-            case TOP_MANAGER -> finalRate.subtract(BigDecimal.valueOf(3));
+            case MANAGER -> finalRate = finalRate.subtract(BigDecimal.valueOf(2));
+            case TOP_MANAGER -> finalRate = finalRate.subtract(BigDecimal.valueOf(3));
         }
 
     }
@@ -97,8 +97,8 @@ public class ScoringServiceImpl implements ScoringService {
         EmploymentDto employment = scoringData.getEmployment();
 
         switch (employment.getEmploymentStatus()) {
-            case SELF_EMPLOYED -> finalRate.add(BigDecimal.valueOf(2));
-            case BUSINESS_OWNER -> finalRate.add(BigDecimal.valueOf(1));
+            case SELF_EMPLOYED -> finalRate = finalRate.add(BigDecimal.valueOf(2));
+            case BUSINESS_OWNER -> finalRate = finalRate.add(BigDecimal.valueOf(1));
             case UNEMPLOYED -> throw new IllegalArgumentException("Refusal due to unemployed");
         }
 

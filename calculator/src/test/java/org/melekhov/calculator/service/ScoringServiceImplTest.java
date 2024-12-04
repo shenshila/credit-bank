@@ -53,11 +53,11 @@ public class ScoringServiceImplTest {
                 .isInsuranceEnabled(true)
                 .isSalaryClient(false)
                 .build();
-        BigDecimal initialRate = BigDecimal.valueOf(13);
+        BigDecimal initialRate = BigDecimal.valueOf(15);
 
         BigDecimal finalRate = scoringService.calcRate(scoringDataDto, initialRate);
 
-        assertEquals(BigDecimal.valueOf(13), finalRate);
+        assertEquals(BigDecimal.valueOf(14), finalRate);
 
 
     }
