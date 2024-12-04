@@ -53,6 +53,6 @@ public class CreditDto {
     @NotNull(message = "paymentSchedule cannot be null")
     @Size(min = 6, message = "paymentSchedule must contain at least six elements")
     @Schema(description = "График платежей")
-    private List<@Valid PaymentScheduleElementDto> paymentSchedule = new ArrayList<>();
+    private List<@Valid PaymentScheduleElementDto> paymentSchedule;
 
 }
