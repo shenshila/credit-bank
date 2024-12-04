@@ -2,17 +2,19 @@ package org.melekhov.calculator.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
+import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@Builder
 @Data
 public class    LoanStatementRequestDto {
 
     @NotNull(message = "Amount cannot be null")
     @DecimalMin(value = "20000", message = "Amount must be greater than 20000")
-    @Schema(description = "Запрашиваемая сумма", example = "560400.67")
+    @Schema(description = "Запрашиваемая сумма", example = "560000.00")
     private BigDecimal amount;
 
     @NotNull(message = "Term cannot be null")
@@ -49,16 +51,12 @@ public class    LoanStatementRequestDto {
 
     @NotNull(message = "passportSeries cannot be null")
     @Pattern(regexp = "^\\d{4}$", message = "passportSeries must be 4 digits")
-    @Schema(description = "Серия пасспорта", example = "1234")
+    @Schema(description = "Серия паспорта", example = "1234")
     private String passportSeries;
 
     @NotNull(message = "passportNumber cannot be null")
     @Pattern(regexp = "^\\d{6}$", message = "passportNumber must be between 6 digits")
-    @Schema(description = "Номер пасспорта", example = "1234123412")
+    @Schema(description = "Номер паспорта", example = "1234123412")
     private String passportNumber;
 
-    public LoanStatementRequestDto() {};
-
-    public LoanStatementRequestDto(BigDecimal bigDecimal, int i, String ivan, String ivanov, String ivanovich, String mail, LocalDate of, String number, String number1) {
-    }
 }

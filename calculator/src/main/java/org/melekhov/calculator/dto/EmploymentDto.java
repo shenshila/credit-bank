@@ -2,12 +2,14 @@ package org.melekhov.calculator.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
+import lombok.Builder;
 import lombok.Data;
 import org.melekhov.calculator.dto.enums.EmploymentStatus;
 import org.melekhov.calculator.dto.enums.Position;
 
 import java.math.BigDecimal;
 
+@Builder
 @Data
 public class EmploymentDto {
 
@@ -23,7 +25,7 @@ public class EmploymentDto {
     private String employerINN;
 
     @NotNull(message = "salary cannot be null")
-    @DecimalMin(value = "11000", message = "salary must be greater than zero")
+    @DecimalMin(value = "11000", message = "salary must be greater than 11000")
     @Schema(description = "Зарплата сотрудника", example = "73289.45")
     private BigDecimal salary;
 
@@ -34,12 +36,12 @@ public class EmploymentDto {
     private Position position;
 
     @NotNull(message = "workExperienceTotal cannot be null")
-    @Min(value = 0, message = "workExperienceTotal must be non-negative")
+    @Positive
     @Schema(description = "Рабочий стаж(месяцы)", example = "28")
     private Integer workExperienceTotal;
 
     @NotNull(message = "workExperienceCurrent cannot be null")
-    @Min(value = 0, message = "workExperienceCurrent must be non-negative")
+    @Positive
     @Schema(description = "Стаж работы на нынешней должности", example = "7")
     private Integer workExperienceCurrent;
 
