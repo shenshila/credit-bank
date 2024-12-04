@@ -3,17 +3,20 @@ package org.melekhov.calculator.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
+import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+@Builder
 @Data
 public class CreditDto {
 
     @NotNull(message = "Amount cannot be null")
     @DecimalMin(value = "20000", message = "Amount must be greater than 20000")
+    @DecimalMax(value = "1000000")
     @Schema(description = "Полная сумма кредита", example = "456253.27")
     private BigDecimal amount;
 
@@ -24,18 +27,18 @@ public class CreditDto {
     private Integer term;
 
     @NotNull(message = "MonthlyPayment cannot be null")
-    @DecimalMin(value = "0.01", message = "MonthlyPayment must be greater than zero")
+    @Positive
     @Schema(description = "Ежесячный платеж", example = "13223.67")
     private BigDecimal monthlyPayment;
 
     @NotNull(message = "Rate cannot be null")
-    @DecimalMin(value = "0", message = "Rate must be non-negative")
+    @Positive
     @Max(value = 100, message = "Rate cannot exceed 100%")
     @Schema(description = "Ключевая ставка", example = "12")
     private BigDecimal rate;
 
     @NotNull(message = "Psk cannot be null")
-    @DecimalMin(value = "0", message = "Psk must be non-negative")
+    @Positive
     @Schema(description = "Расходы клиента", example = "78993.23")
     private BigDecimal psk;
 
@@ -52,7 +55,4 @@ public class CreditDto {
     @Schema(description = "График платежей")
     private List<@Valid PaymentScheduleElementDto> paymentSchedule;
 
-    public void addPaymentScheduleElement(PaymentScheduleElementDto paymentScheduleElement) {
-        this.paymentSchedule.add(paymentScheduleElement);
-    }
 }

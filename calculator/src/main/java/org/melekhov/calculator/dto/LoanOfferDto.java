@@ -1,15 +1,14 @@
 package org.melekhov.calculator.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
+import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
+@Builder
 @Data
 public class LoanOfferDto {
 
@@ -32,14 +31,14 @@ public class LoanOfferDto {
     private Integer term;
 
     @NotNull(message = "monthlyPayment cannot be null")
-    @DecimalMin(value = "0.01", message = "monthlyPayment must be greater than zero")
+    @Positive
     @Schema(description = "Ежемесячный платеж", example = "15654.34")
     private BigDecimal monthlyPayment;
 
     @NotNull(message = "rate cannot be null")
-    @DecimalMin(value = "0", message = "rate must be non-negative")
+    @Positive
     @Max(value = 100, message = "rate cannot exceed 100%")
-    @Schema(description = "Ставка", example = "12")
+    @Schema(description = "Ставка по кредиту", example = "12")
     private BigDecimal rate;
 
     @NotNull(message = "isInsuranceEnabled cannot be null")

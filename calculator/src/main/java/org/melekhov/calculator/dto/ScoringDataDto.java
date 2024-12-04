@@ -3,6 +3,7 @@ package org.melekhov.calculator.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
+import lombok.Builder;
 import lombok.Data;
 import org.melekhov.calculator.dto.enums.Gender;
 import org.melekhov.calculator.dto.enums.MaritalStatus;
@@ -10,12 +11,13 @@ import org.melekhov.calculator.dto.enums.MaritalStatus;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@Builder
 @Data
 public class ScoringDataDto {
 
     @NotNull(message = "Amount cannot be null")
     @Min(value = 20000, message = "Amount must be at least 20000")
-    @Schema(description = "Сумма кредита", example = "656666.66")
+    @Schema(description = "Запрашиваемая сумма кредита", example = "656666.66")
     private BigDecimal amount;
 
     @NotNull(message = "Term cannot be null")
@@ -44,7 +46,7 @@ public class ScoringDataDto {
 
     @NotNull(message = "birthDate cannot be null")
     @Past(message = "birthDate must be in the past")
-    @Schema(description = "День рождния", example = "22.02.2000")
+    @Schema(description = "Дата рождения", example = "22.02.2000")
     private LocalDate birthDate;
 
     @NotNull(message = "passportSeries cannot be null")
@@ -54,7 +56,7 @@ public class ScoringDataDto {
 
     @NotNull(message = "passportNumber cannot be null")
     @Pattern(regexp = "^\\d{6}$", message = "passportNumber must be 6 digits")
-    @Schema(description = "Номер паспорта", example = "1234123412")
+    @Schema(description = "Номер паспорта", example = "123456")
     private String passportNumber;
 
     @NotNull(message = "passportIssueDate cannot be null")
@@ -63,15 +65,15 @@ public class ScoringDataDto {
     private LocalDate passportIssueDate;
 
     @NotNull(message = "passportIssueBranch cannot be null")
-    @Schema(description = "Кем выдаан", example = "ОВД Центрального района")
+    @Schema(description = "Кем выдан", example = "ОВД Центрального района")
     private String passportIssueBranch;
 
     @NotNull(message = "maritalStatus cannot be null")
-    @Schema(description = "Женат/Замужем", example = "SINGLE", allowableValues = {"SINGLE", "MARRIED"})
+    @Schema(description = "Женат/Замужем", example = "SINGLE", allowableValues = {"SINGLE", "MARRIED", "DIVORCED"})
     private MaritalStatus maritalStatus;
 
     @NotNull(message = "dependentAmount cannot be null")
-    @Min(value = 0, message = "dependentAmount must be at least 0")
+    @Positive
     @Schema(example = "234444.23")
     private Integer dependentAmount;
 
