@@ -26,21 +26,10 @@ public class ScoringServiceImpl implements ScoringService {
 
         checkEmploymentStatus(scoringData);
         checkPosition(scoringData);
-        checkAmount(scoringData);
         checkMaritalStatus(scoringData);
-        checkAge(scoringData);
         checkGender(scoringData);
-        checkWorkExperience(scoringData);
 
         return finalRate;
-    }
-
-    private void checkWorkExperience(ScoringDataDto scoringData) {
-        EmploymentDto employment = scoringData.getEmployment();
-
-        if (employment.getWorkExperienceTotal() < 18 || employment.getWorkExperienceCurrent() < 3) {
-            throw new IllegalArgumentException("WorkExperienceTotal most be greatest than 18 and WorkExperienceCurrent most be less than 3");
-        }
     }
 
     private void checkGender(ScoringDataDto scoringData) {
@@ -48,19 +37,11 @@ public class ScoringServiceImpl implements ScoringService {
         int years = age.getYears();
 
         if (scoringData.getGender() == Gender.FEMALE && years > 32 && years < 60) {
-            finalRate = finalRate = finalRate.subtract(BigDecimal.valueOf(3));
+            finalRate = finalRate.subtract(BigDecimal.valueOf(3));
         } else if (scoringData.getGender() == Gender.MALE && years > 30 && years < 55) {
-            finalRate = finalRate = finalRate.subtract(BigDecimal.valueOf(3));
+            finalRate = finalRate.subtract(BigDecimal.valueOf(3));
         } else if (scoringData.getGender() == Gender.UNKNOWN) {
-            finalRate = finalRate = finalRate.add(BigDecimal.valueOf(7));
-        }
-    }
-
-    private void checkAge(ScoringDataDto scoringData) {
-        Period age = Period.between(scoringData.getBirthDate(), LocalDate.now());
-
-        if (age.getYears() < 20 && age.getYears() > 60) {
-            throw new IllegalArgumentException("Age must be between 20 and 60");
+            finalRate = finalRate.add(BigDecimal.valueOf(7));
         }
     }
 
@@ -70,17 +51,6 @@ public class ScoringServiceImpl implements ScoringService {
             case SINGLE -> finalRate = finalRate.add(BigDecimal.ONE);
         }
 
-    }
-
-    private void checkAmount(ScoringDataDto scoringData) {
-        EmploymentDto employment = scoringData.getEmployment();
-
-        BigDecimal amount = scoringData.getAmount();
-        BigDecimal salary = employment.getSalary();
-
-        if (amount.compareTo(salary) < 0) {
-            throw new IllegalArgumentException("Amount must be greater than 24 salary");
-        }
     }
 
     private void checkPosition(ScoringDataDto scoringData) {
@@ -99,7 +69,6 @@ public class ScoringServiceImpl implements ScoringService {
         switch (employment.getEmploymentStatus()) {
             case SELF_EMPLOYED -> finalRate = finalRate.add(BigDecimal.valueOf(2));
             case BUSINESS_OWNER -> finalRate = finalRate.add(BigDecimal.valueOf(1));
-            case UNEMPLOYED -> throw new IllegalArgumentException("Refusal due to unemployed");
         }
 
     }

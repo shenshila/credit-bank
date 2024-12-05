@@ -74,7 +74,7 @@ public class ScoringDataDto {
 
     @NotNull(message = "dependentAmount cannot be null")
     @Positive
-    @Schema(example = "4")
+    @Schema(description = "Количество иждивецев", example = "4")
     private Integer dependentAmount;
 
     @NotNull(message = "employment cannot be null")
@@ -84,7 +84,7 @@ public class ScoringDataDto {
 
     @NotNull(message = "accountNumber cannot be null")
     @Pattern(regexp = "^\\d{10}$", message = "accountNumber must be 10 digits")
-    @Schema(description = "Нормер", example = "1231231231")
+    @Schema(description = "Номер счета", example = "1231231231")
     private String accountNumber;
 
     @NotNull(message = "isInsuranceEnabled cannot be null")

@@ -38,7 +38,7 @@ public class CreditDto {
 
     @NotNull(message = "Psk cannot be null")
     @Positive
-    @Schema(description = "Расходы клиента", example = "78993.23")
+    @Schema(description = "Полная сумма кредита", example = "78993.23")
     private BigDecimal psk;
 
     @NotNull(message = "isInsuranceEnabled cannot be null")

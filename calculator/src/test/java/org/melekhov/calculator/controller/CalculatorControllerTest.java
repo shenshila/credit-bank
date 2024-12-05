@@ -111,7 +111,7 @@ public class CalculatorControllerTest {
                 .isSalaryClient(false)
                 .build();
 
-        when(offerService.calculateCredit(scoringDataDto)).thenReturn(ResponseEntity.ok(creditDto));
+        when(offerService.calculateCredit(scoringDataDto)).thenReturn(creditDto);
 
         ResponseEntity<CreditDto> response = calculatorController.calculateCredit(scoringDataDto);
 

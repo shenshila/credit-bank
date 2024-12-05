@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 public interface OfferService {
-    ResponseEntity<CreditDto> calculateCredit(ScoringDataDto scoringData);
+    CreditDto calculateCredit(ScoringDataDto scoringData);
 
     List<LoanOfferDto> createOffersList(LoanStatementRequestDto request);
 }

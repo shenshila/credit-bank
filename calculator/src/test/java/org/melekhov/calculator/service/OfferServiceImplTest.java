@@ -85,9 +85,9 @@ public class OfferServiceImplTest {
                 .isSalaryClient(false)
                 .build();
 
-        ResponseEntity<CreditDto> response = offerService.calculateCredit(scoringDataDto);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        CreditDto credit = response.getBody();
+        CreditDto response = offerService.calculateCredit(scoringDataDto);
+        assertEquals(HttpStatus.OK, ResponseEntity.status(HttpStatus.OK).body(response));
+        CreditDto credit = ResponseEntity.status(HttpStatus.OK).body(response).getBody();
         assertNotNull(credit);
         assertEquals(BigDecimal.valueOf(660000.0), credit.getAmount());
         assertEquals(19, credit.getTerm());
