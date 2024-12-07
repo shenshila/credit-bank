@@ -1,6 +1,10 @@
 package org.melekhov.calculator.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.Builder;
@@ -9,10 +13,14 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Builder
 @Data
 public class CreditDto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID creditId;
 
     @NotNull(message = "Amount cannot be null")
     @DecimalMin(value = "20000", message = "Amount must be greater than 20000")
