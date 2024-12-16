@@ -55,7 +55,7 @@ public class CalculateServiceImpl implements CalculateService {
 
         BigDecimal monthlyRate = rate
                 .divide(BigDecimal.valueOf(100))
-                .divide(BigDecimal.valueOf(12), 2, RoundingMode.HALF_UP);
+                .divide(BigDecimal.valueOf(12), 4, RoundingMode.HALF_UP);
 
         double pow = Math.pow(1 + monthlyRate.doubleValue(), term);
         BigDecimal numerator = totalAmount.multiply(monthlyRate)
