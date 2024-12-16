@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/deal")
@@ -25,12 +26,14 @@ public class DealController {
 
     @PostMapping("/offer/select")
     public ResponseEntity<Void> selectOffer (@RequestBody LoanOfferDto loanOffer) {
-        return ResponseEntity.ok().build();
+        dealService.selectOffer(loanOffer);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/{statementId}")
-    public ResponseEntity<Void> calculateCredit(@PathVariable("statementId") String statementId,
+    @PostMapping("/calculate/{statementId}")
+    public ResponseEntity<Void> calculateCredit(@PathVariable("statementId") UUID statementId,
                                                       @RequestBody FinishRegistrationRequestDto finishRegistrationRequest) {
+        dealService.calculateCredit(statementId, finishRegistrationRequest);
         return ResponseEntity.ok().build();
     }
 

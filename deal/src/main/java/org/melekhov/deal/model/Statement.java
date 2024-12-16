@@ -9,6 +9,8 @@ import org.melekhov.deal.model.enums.ApplicationStatus;
 import org.melekhov.deal.model.jsonb.StatusHistory;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -48,6 +50,6 @@ public class Statement {
     private String sesCode; // ????
 
     @Column(name = "status_history", columnDefinition = "jsonb")
-    @Embedded
-    private StatusHistory statusHistory;
+    @ElementCollection
+    private List<StatusHistory> statusHistory = new ArrayList<>();
 }

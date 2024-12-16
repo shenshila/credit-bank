@@ -19,7 +19,7 @@ public interface FeignClient {
     @PostMapping(value = "/offers")
     List<LoanOfferDto> getLoanOffers(@RequestBody LoanStatementRequestDto request);
 
-//    @PostMapping(value = "/calc")
-//    CreditDto calculateCredit(@RequestBody ScoringDataDto request);
+    @PostMapping(value = "/calc")
+    CreditDto calculateCredit(@RequestBody ScoringDataDto request);
 
 }

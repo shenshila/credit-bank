@@ -20,9 +20,6 @@ public class StatementMapper {
         Statement statement = Statement.builder()
                 .createdOn(LocalDateTime.now())
                 .clientId(client)
-                .statusHistory(StatusHistory.builder()
-                        .changeType(ChangeType.AUTOMATIC)
-                        .build())
                 .status(ApplicationStatus.PREAPPROVAL)
                 .build();
 

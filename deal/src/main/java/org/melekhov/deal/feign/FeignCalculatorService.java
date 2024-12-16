@@ -2,8 +2,10 @@ package org.melekhov.deal.feign;
 
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.melekhov.deal.dto.CreditDto;
 import org.melekhov.deal.dto.LoanOfferDto;
 import org.melekhov.deal.dto.LoanStatementRequestDto;
+import org.melekhov.deal.dto.ScoringDataDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,15 +24,8 @@ public class FeignCalculatorService {
         return feignClient.getLoanOffers(request);
     }
 
-    public List<LoanOfferDto> updateLoanOffers(LoanStatementRequestDto request,
-                                               UUID statementId) {
-        List<LoanOfferDto> loanOffers = getLoanOffers(request);
-
-        for (LoanOfferDto offer : loanOffers) {
-            offer.setStatementId(statementId);
-        }
-
-        return loanOffers;
+    public CreditDto calculateCredit(ScoringDataDto scoringData) {
+        return feignClient.calculateCredit(scoringData);
     }
 
 }
