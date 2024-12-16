@@ -7,6 +7,7 @@ import org.melekhov.calculator.dto.ScoringDataDto;
 import org.melekhov.calculator.service.CalculateService;
 import org.melekhov.calculator.service.ScoringService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -20,7 +21,7 @@ import java.util.List;
 @Slf4j
 public class CalculateServiceImpl implements CalculateService {
     @Value("${base.rate}")
-    private static BigDecimal BASE_RATE;
+    private BigDecimal BASE_RATE;
     private static final BigDecimal INSURANCE = BigDecimal.valueOf(10000);
 
     private final ScoringService scoringService;
@@ -39,6 +40,7 @@ public class CalculateServiceImpl implements CalculateService {
         log.debug("calculating Rate: isInsuranceEnabled: {}, isSalaryClient: {}", isInsuranceEnabled, isSalaryClient);
 
         BigDecimal rate = BASE_RATE;
+        log.debug("Rate is: {}", rate);
 
         if (isInsuranceEnabled) rate = rate.subtract(BigDecimal.valueOf(3));
         if (isSalaryClient) rate = rate.subtract(BigDecimal.ONE);

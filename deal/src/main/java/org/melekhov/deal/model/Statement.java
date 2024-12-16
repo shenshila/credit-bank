@@ -2,6 +2,9 @@ package org.melekhov.deal.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+import org.melekhov.deal.dto.LoanOfferDto;
 import org.melekhov.deal.model.enums.ApplicationStatus;
 import org.melekhov.deal.model.jsonb.StatusHistory;
 
@@ -13,8 +16,7 @@ import java.util.UUID;
 @Table(name = "statement")
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 public class Statement {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -29,22 +31,23 @@ public class Statement {
     @JoinColumn(name = "credit_id", referencedColumnName = "credit_id")
     private Credit creditId;
 
-    @Column(name = "status", insertable = false, updatable = false) //не забудь здесь
     @Enumerated(EnumType.STRING)
-    private ApplicationStatus status;
+    private ApplicationStatus status;//не забудь здесь
 
-    @Column(name = "creation_date")
+//    @Column(name = "creation_date")
     private LocalDateTime createdOn;
 
-    @Column(name = "applied_offer")
-    private String appliedOffer; // Изменить
+    @Column(name = "applied_offer", columnDefinition = "jsonb")
+    @JdbcTypeCode(SqlTypes.JSON)
+    private LoanOfferDto appliedOffer; // Изменить
 
-    @Column(name = "sign_date")
+//    @Column(name = "sign_date")
     private LocalDateTime signDate;
 
-    @Column(name = "ses_code")
+//    @Column(name = "ses_code")
     private String sesCode; // ????
 
-    @Column(name = "status_history")
+    @Column(name = "status_history", columnDefinition = "jsonb")
+    @Embedded
     private StatusHistory statusHistory;
 }

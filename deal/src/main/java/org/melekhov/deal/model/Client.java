@@ -2,6 +2,10 @@ package org.melekhov.deal.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.Type;
+import org.hibernate.type.SqlTypes;
 import org.melekhov.deal.model.enums.Gender;
 import org.melekhov.deal.model.enums.MaritalStatus;
 import org.melekhov.deal.model.jsonb.Employment;
@@ -10,13 +14,12 @@ import org.melekhov.deal.model.jsonb.Passport;
 import java.time.LocalDate;
 import java.util.UUID;
 
-@Builder
 @Entity
 @Table(name = "client")
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
-@Getter
-@Setter
+@AllArgsConstructor
+@Builder
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -42,15 +45,18 @@ public class Client {
     private Gender gender;
 
     @Column(name = "marital_status")
+    @Enumerated(EnumType.STRING)
     private MaritalStatus maritalStatus;
 
     @Column(name = "dependent_amount")
     private Integer dependentAmount;
 
-    @Column(name = "passport_id")
+    @Column(columnDefinition = "jsonb", name = "passport_id")
+    @Embedded
     private Passport passport;
 
-    @Column(name = "employment_id")
+    @Column(columnDefinition = "jsonb", name = "employment_id")
+    @Embedded
     private Employment employment;
 
     @Column(name = "account_number")
