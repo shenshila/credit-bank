@@ -13,8 +13,7 @@ import java.util.UUID;
 @Table(name = "credit")
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 public class Credit {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
