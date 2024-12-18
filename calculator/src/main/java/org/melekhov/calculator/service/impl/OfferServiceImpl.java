@@ -27,6 +27,7 @@ public class OfferServiceImpl implements OfferService {
         log.info("Starting calculate credit for scoring data: {}", scoringData);
         userValidService.checkClientSolvency(scoringData);
 
+        log.debug("Starting calculate credit for scoring data: {}", scoringData);
         BigDecimal rate = calculateService.calcRate(scoringData, calculateService.calcRate(scoringData.getIsInsuranceEnabled(), scoringData.getIsSalaryClient()));
         BigDecimal totalAmount = calculateService.calcTotalAmount(scoringData.getAmount(), scoringData.getIsInsuranceEnabled());
         BigDecimal monthlyPayment = calculateService.calcMonthlyPayment(totalAmount, rate, scoringData.getTerm());

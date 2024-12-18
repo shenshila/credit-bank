@@ -57,7 +57,7 @@ public class ScoringServiceImpl implements ScoringService {
         EmploymentDto employment = scoringData.getEmployment();
 
         switch (employment.getPosition()) {
-            case MANAGER -> finalRate = finalRate.subtract(BigDecimal.valueOf(2));
+            case WORKER -> finalRate = finalRate.subtract(BigDecimal.valueOf(2));
             case TOP_MANAGER -> finalRate = finalRate.subtract(BigDecimal.valueOf(3));
         }
 
