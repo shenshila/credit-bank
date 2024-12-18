@@ -27,29 +27,6 @@ public class OfferServiceImpl implements OfferService {
         log.info("Starting calculate credit for scoring data: {}", scoringData);
         userValidService.checkClientSolvency(scoringData);
 
-        System.out.println("amount: " + scoringData.getAmount());
-        System.out.println("term: " + scoringData.getTerm());
-        System.out.println("firstName: " + scoringData.getFirstName());
-        System.out.println("lastName: " + scoringData.getLastName());
-        System.out.println("middleName: " + scoringData.getMiddleName());
-        System.out.println("gender: " + scoringData.getGender());
-        System.out.println("birthDate: " + scoringData.getBirthDate());
-        System.out.println("passportSeries: " + scoringData.getPassportSeries());
-        System.out.println("passportNumber: " + scoringData.getPassportNumber());
-        System.out.println("passportIssueDate: " + scoringData.getPassportIssueDate());
-        System.out.println("passportIssueBranch: " + scoringData.getPassportIssueBranch());
-        System.out.println("maritalStatus: " + scoringData.getMaritalStatus());
-        System.out.println("dependentAmount: " + scoringData.getDependentAmount());
-        System.out.println("employmentStatus: " + scoringData.getEmployment().getEmploymentStatus());
-        System.out.println("INN: " + scoringData.getEmployment().getEmployerINN());
-        System.out.println("position: " + scoringData.getEmployment().getPosition());
-        System.out.println("salary: " + scoringData.getEmployment().getSalary());
-        System.out.println("workExperienceTotal: " + scoringData.getEmployment().getWorkExperienceTotal());
-        System.out.println("workExperienceCurrent: " + scoringData.getEmployment().getWorkExperienceCurrent());
-        System.out.println("accountNumber: " + scoringData.getAccountNumber());
-        System.out.println("isInsuranceEnabled: " + scoringData.getIsInsuranceEnabled());
-        System.out.println("isSalaryClient: " + scoringData.getIsSalaryClient());
-
         log.debug("Starting calculate credit for scoring data: {}", scoringData);
         BigDecimal rate = calculateService.calcRate(scoringData, calculateService.calcRate(scoringData.getIsInsuranceEnabled(), scoringData.getIsSalaryClient()));
         BigDecimal totalAmount = calculateService.calcTotalAmount(scoringData.getAmount(), scoringData.getIsInsuranceEnabled());

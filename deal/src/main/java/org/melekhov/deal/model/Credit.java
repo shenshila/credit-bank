@@ -6,6 +6,7 @@ import org.melekhov.deal.dto.PaymentScheduleElementDto;
 import org.melekhov.deal.model.enums.CreditStatus;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -36,7 +37,8 @@ public class Credit {
     private BigDecimal fullAmount;
 
     @Column(name = "payment_schedule")
-    private PaymentScheduleElementDto paymentSchedule;
+    @ElementCollection
+    private List<PaymentScheduleElementDto> paymentSchedule;
 
     @Column(name = "insurance_enabled")
     private Boolean isInsuranceEnabled;
