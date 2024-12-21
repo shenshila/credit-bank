@@ -5,7 +5,6 @@ import jakarta.persistence.Embeddable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-//вынести ВСЕ DTOшки в корень
 @Embeddable
 public class PaymentScheduleElementDto {
     private Integer number;

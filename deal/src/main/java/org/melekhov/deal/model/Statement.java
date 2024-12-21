@@ -34,20 +34,17 @@ public class Statement {
     private Credit creditId;
 
     @Enumerated(EnumType.STRING)
-    private ApplicationStatus status;//не забудь здесь
+    private ApplicationStatus status;
 
-//    @Column(name = "creation_date")
     private LocalDateTime createdOn;
 
     @Column(name = "applied_offer", columnDefinition = "jsonb")
     @JdbcTypeCode(SqlTypes.JSON)
-    private LoanOfferDto appliedOffer; // Изменить
+    private LoanOfferDto appliedOffer;
 
-//    @Column(name = "sign_date")
     private LocalDateTime signDate;
 
-//    @Column(name = "ses_code")
-    private String sesCode; // ????
+    private String sesCode;
 
     @Column(name = "status_history", columnDefinition = "jsonb")
     @ElementCollection
