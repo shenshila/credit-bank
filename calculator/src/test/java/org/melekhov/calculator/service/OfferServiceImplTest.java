@@ -60,7 +60,7 @@ public class OfferServiceImplTest {
                 .employmentStatus(EmploymentStatus.EMPLOYED)
                 .employerINN("7701000000")
                 .salary(BigDecimal.valueOf(73289.45))
-                .position(Position.MANAGER)
+                .position(Position.WORKER)
                 .workExperienceTotal(28)
                 .workExperienceCurrent(7)
                 .build();

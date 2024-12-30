@@ -1,4 +1,4 @@
-package org.melekhov.calculator.dto.enums;
+package org.melekhov.deal.model.enums;
 
 public enum EmploymentStatus {
     UNEMPLOYED,
