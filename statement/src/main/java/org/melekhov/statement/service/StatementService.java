@@ -1,4 +1,4 @@
-package org.melekhov.statement.Service;
+package org.melekhov.statement.service;
 
 import org.melekhov.statement.dto.LoanOfferDto;
 import org.melekhov.statement.dto.LoanStatementRequestDto;
