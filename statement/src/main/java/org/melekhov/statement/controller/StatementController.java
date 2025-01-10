@@ -24,7 +24,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/statement")
 @RequiredArgsConstructor
-@Tag(name = "Statement Controller", description = "Контроллер для прескорнга, создания предложений и выбора одного предложения")
+@Tag(name = "Statement Controller", description = "Контроллер для прескоринга, создания предложений и выбора одного предложения")
 @Slf4j
 public class StatementController {
 

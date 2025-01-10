@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("api/deal")
+@RequestMapping("/api/deal")
 @RequiredArgsConstructor
 @Tag(name = "Deal Controller", description = "Контроллер для выбора предложения и рассчета кредита")
 @Slf4j
