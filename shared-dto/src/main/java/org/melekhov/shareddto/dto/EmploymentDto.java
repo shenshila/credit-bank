@@ -1,11 +1,11 @@
-package org.melekhov.calculator.dto;
+package org.melekhov.shareddto.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import lombok.Builder;
 import lombok.Data;
-import org.melekhov.calculator.dto.enums.EmploymentStatus;
-import org.melekhov.calculator.dto.enums.Position;
+import org.melekhov.shareddto.enums.EmploymentStatus;
+import org.melekhov.shareddto.enums.Position;
 
 import java.math.BigDecimal;
 
@@ -46,3 +46,4 @@ public class EmploymentDto {
     private Integer workExperienceCurrent;
 
 }
+

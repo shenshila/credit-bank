@@ -2,12 +2,11 @@ package org.melekhov.calculator.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.melekhov.calculator.dto.PaymentScheduleElementDto;
-import org.melekhov.calculator.dto.ScoringDataDto;
 import org.melekhov.calculator.service.CalculateService;
 import org.melekhov.calculator.service.ScoringService;
+import org.melekhov.shareddto.dto.PaymentScheduleElementDto;
+import org.melekhov.shareddto.dto.ScoringDataDto;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;

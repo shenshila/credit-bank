@@ -3,16 +3,17 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.3.5</version>
-		<relativePath/>
+		<groupId>org.melekhov</groupId>
+		<artifactId>credit-bank</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
 	</parent>
+
 	<groupId>org.melekhov</groupId>
 	<artifactId>deal</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>deal</name>
 	<description>deal</description>
+
 	<url/>
 	<licenses>
 		<license/>
@@ -38,6 +39,7 @@
 		<liquibase.version>4.27.0</liquibase.version>
 		<liquibase-hibernate.version>3.6</liquibase-hibernate.version>
 		<spring-kafka.version>3.2.4</spring-kafka.version>
+		<dto.version>0.0.1-SNAPSHOT</dto.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -103,6 +105,18 @@
 			<groupId>org.springframework.kafka</groupId>
 			<artifactId>spring-kafka</artifactId>
 			<version>${spring-kafka.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.melekhov</groupId>
+			<artifactId>shared-dto</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.melekhov</groupId>
+			<artifactId>shared-dto</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 

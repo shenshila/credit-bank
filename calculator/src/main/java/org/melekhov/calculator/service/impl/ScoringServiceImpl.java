@@ -1,17 +1,23 @@
 package org.melekhov.calculator.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.melekhov.calculator.dto.EmploymentDto;
-import org.melekhov.calculator.dto.ScoringDataDto;
-import org.melekhov.calculator.dto.enums.Gender;
 import org.melekhov.calculator.service.ScoringService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.melekhov.shareddto.dto.EmploymentDto;
+import org.melekhov.shareddto.dto.ScoringDataDto;
+import org.melekhov.shareddto.enums.Gender;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
+
+import static org.melekhov.shareddto.enums.EmploymentStatus.BUSINESS_OWNER;
+import static org.melekhov.shareddto.enums.EmploymentStatus.SELF_EMPLOYED;
+import static org.melekhov.shareddto.enums.MaritalStatus.MARRIED;
+import static org.melekhov.shareddto.enums.MaritalStatus.SINGLE;
+import static org.melekhov.shareddto.enums.Position.TOP_MANAGER;
+import static org.melekhov.shareddto.enums.Position.WORKER;
 
 @Service
 @RequiredArgsConstructor

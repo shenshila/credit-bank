@@ -4,9 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
-import org.melekhov.deal.dto.LoanOfferDto;
 import org.melekhov.deal.model.enums.ApplicationStatus;
 import org.melekhov.deal.model.jsonb.StatusHistory;
+import org.melekhov.shareddto.dto.LoanOfferDto;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

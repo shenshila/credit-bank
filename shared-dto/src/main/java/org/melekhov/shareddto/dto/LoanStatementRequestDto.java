@@ -1,4 +1,4 @@
-package org.melekhov.calculator.dto;
+package org.melekhov.shareddto.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 @Builder
 @Data
-public class    LoanStatementRequestDto {
+public class LoanStatementRequestDto {
 
     @NotNull(message = "Amount cannot be null")
     @DecimalMin(value = "20000", message = "Amount must be greater than 20000")

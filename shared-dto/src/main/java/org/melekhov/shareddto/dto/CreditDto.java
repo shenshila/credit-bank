@@ -1,4 +1,4 @@
-package org.melekhov.calculator.dto;
+package org.melekhov.shareddto.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
@@ -8,7 +8,6 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.UUID;
 
 @Builder
 @Data
@@ -50,6 +49,6 @@ public class CreditDto {
 
     @Size(min = 6, message = "paymentSchedule must contain at least six elements")
     @Schema(description = "График платежей")
-    private List<@Valid PaymentScheduleElementDto> paymentSchedule;
+    private List<PaymentScheduleElementDto> paymentSchedule;
 
 }

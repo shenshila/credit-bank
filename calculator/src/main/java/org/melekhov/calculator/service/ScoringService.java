@@ -1,6 +1,6 @@
 package org.melekhov.calculator.service;
 
-import org.melekhov.calculator.dto.ScoringDataDto;
+import org.melekhov.shareddto.dto.ScoringDataDto;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;

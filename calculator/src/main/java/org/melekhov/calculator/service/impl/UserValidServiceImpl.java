@@ -1,12 +1,11 @@
 package org.melekhov.calculator.service.impl;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.melekhov.calculator.dto.LoanStatementRequestDto;
-import org.melekhov.calculator.dto.ScoringDataDto;
-import org.melekhov.calculator.dto.enums.EmploymentStatus;
 import org.melekhov.calculator.service.UserValidService;
+import org.melekhov.shareddto.dto.LoanStatementRequestDto;
+import org.melekhov.shareddto.dto.ScoringDataDto;
+import org.melekhov.shareddto.enums.EmploymentStatus;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;

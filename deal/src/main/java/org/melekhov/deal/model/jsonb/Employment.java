@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.melekhov.deal.model.enums.EmploymentPosition;
-import org.melekhov.deal.model.enums.EmploymentStatus;
+import org.melekhov.shareddto.enums.EmploymentStatus;
 
 import java.math.BigDecimal;
 import java.util.UUID;

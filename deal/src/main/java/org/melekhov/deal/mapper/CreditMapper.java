@@ -3,6 +3,7 @@ package org.melekhov.deal.mapper;
 import org.melekhov.deal.dto.CreditDto;
 import org.melekhov.deal.model.Credit;
 import org.melekhov.deal.model.enums.CreditStatus;
+
 import org.springframework.stereotype.Component;
 
 @Component

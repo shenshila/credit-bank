@@ -1,11 +1,11 @@
-package org.melekhov.deal.dto;
+package org.melekhov.shareddto.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.melekhov.deal.model.enums.Gender;
-import org.melekhov.deal.model.enums.MaritalStatus;
+import org.melekhov.shareddto.enums.Gender;
+import org.melekhov.shareddto.enums.MaritalStatus;
 
 import java.time.LocalDate;
 

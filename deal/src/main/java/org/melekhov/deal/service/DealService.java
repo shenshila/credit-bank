@@ -1,8 +1,8 @@
 package org.melekhov.deal.service;
 
-import org.melekhov.deal.dto.FinishRegistrationRequestDto;
-import org.melekhov.deal.dto.LoanOfferDto;
-import org.melekhov.deal.dto.LoanStatementRequestDto;
+import org.melekhov.shareddto.dto.FinishRegistrationRequestDto;
+import org.melekhov.shareddto.dto.LoanOfferDto;
+import org.melekhov.shareddto.dto.LoanStatementRequestDto;
 
 import java.util.List;
 import java.util.UUID;

@@ -1,4 +1,4 @@
-package org.melekhov.calculator.dto.enums;
+package org.melekhov.shareddto.enums;
 
 public enum Position {
     WORKER,

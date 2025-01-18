@@ -1,18 +1,20 @@
-package org.melekhov.calculator.dto;
+package org.melekhov.shareddto.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import org.melekhov.calculator.dto.enums.Gender;
-import org.melekhov.calculator.dto.enums.MaritalStatus;
+import org.melekhov.shareddto.enums.Gender;
+import org.melekhov.shareddto.enums.MaritalStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Builder
 @Data
+@AllArgsConstructor
 public class ScoringDataDto {
 
     @NotNull(message = "Amount cannot be null")

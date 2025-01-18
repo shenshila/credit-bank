@@ -1,7 +1,7 @@
 package org.melekhov.statement.service;
 
-import org.melekhov.statement.dto.LoanOfferDto;
-import org.melekhov.statement.dto.LoanStatementRequestDto;
+import org.melekhov.shareddto.dto.LoanOfferDto;
+import org.melekhov.shareddto.dto.LoanStatementRequestDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

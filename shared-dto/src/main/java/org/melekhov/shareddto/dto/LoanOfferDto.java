@@ -1,4 +1,4 @@
-package org.melekhov.calculator.dto;
+package org.melekhov.shareddto.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
@@ -50,3 +50,4 @@ public class LoanOfferDto {
     private Boolean isSalaryClient;
 
 }
+
