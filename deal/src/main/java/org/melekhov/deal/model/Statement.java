@@ -2,7 +2,6 @@ package org.melekhov.deal.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.Accessors;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 import org.melekhov.deal.model.enums.ApplicationStatus;

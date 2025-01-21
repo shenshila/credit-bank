@@ -47,7 +47,7 @@ public class CreditDto {
     @Schema(description = "Является ли зарплатным клиентом", example = "false")
     private Boolean isSalaryClient;
 
-//    @Size(min = 6, message = "paymentSchedule must contain at least six elements")
+    @Size(min = 6, message = "paymentSchedule must contain at least six elements")
     @Schema(description = "График платежей")
     private List<PaymentScheduleElement> paymentSchedule;
 

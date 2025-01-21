@@ -62,7 +62,7 @@ public class DealController {
     })
     @PostMapping("/calculate/{statementId}")
     public ResponseEntity<Void> calculateCredit(@PathVariable("statementId") UUID statementId,
-                                                      @RequestBody FinishRegistrationRequestDto finishRegistrationRequest) {
+                                                @RequestBody FinishRegistrationRequestDto finishRegistrationRequest) {
         log.info("Received credit request: {}", finishRegistrationRequest);
         dealService.calculateCredit(statementId, finishRegistrationRequest);
         return ResponseEntity.ok().build();

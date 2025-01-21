@@ -2,6 +2,7 @@ package org.melekhov.deal.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.melekhov.deal.dto.CreditDto;
 import org.melekhov.deal.feign.FeignCalculatorService;
 import org.melekhov.deal.mapper.ClientMapper;
@@ -56,6 +57,7 @@ public class DealServiceImpl implements DealService {
 
         Statement statement = statementMapper.mapToStatement(client);
         statement = statementRepository.save(statement);
+        updateStatementStatus(statement.getStatementId(), ApplicationStatus.PREAPPROVAL, ChangeType.AUTOMATIC);
 
         List<LoanOfferDto> offers = feignCalculatorService.getLoanOffers(request);
         setStatementId(offers, statement.getStatementId());
@@ -70,34 +72,24 @@ public class DealServiceImpl implements DealService {
         Statement statement = statementRepository.getReferenceById(request.getStatementId());
         updateStatement(statement, request);
         log.info("Loan offer selected.");
+        kafkaDocumentService.finishRegistration(statement.getStatementId());
     }
 
-    public void updateStatement(Statement statement, LoanOfferDto request) {
-        StatusHistory statusHistory = StatusHistory.builder()
-                .statusType(ApplicationStatus.CC_APPROVED)
-                .time(LocalDateTime.now())
-                .changeType(ChangeType.AUTOMATIC)
-                .build();
+    private void updateStatement(Statement statement, LoanOfferDto request) {
+        log.info("Updating statement from loan offer request={}", request);
 
+        updateStatementStatus(statement.getStatementId(), ApplicationStatus.APPROVAL, ChangeType.AUTOMATIC);
 
-        List<StatusHistory> list = statement.getStatusHistory();
-        list.add(statusHistory);
-
-        statement.setStatus(statusHistory.getStatusType());
         statement.setAppliedOffer(request);
+
         statementRepository.save(statement);
     }
 
-    public void updateStatement(Statement statement, Credit credit) {
-        StatusHistory statusHistory = StatusHistory.builder()
-                .statusType(ApplicationStatus.APPROVAL)
-                .time(LocalDateTime.now())
-                .changeType(ChangeType.AUTOMATIC)
-                .build();
+    private void updateStatement(Statement statement, Credit credit) {
+        log.info("Updating statement from credit model={}", credit);
 
-        List<StatusHistory> list = statement.getStatusHistory();
-        list.add(statusHistory);
-        statement.setStatusHistory(list);
+        updateStatementStatus(statement.getStatementId(), ApplicationStatus.CC_APPROVED, ChangeType.AUTOMATIC);
+
         statement.setCreditId(credit);
 
         statementRepository.save(statement);
@@ -107,28 +99,6 @@ public class DealServiceImpl implements DealService {
         for (LoanOfferDto offer : offers) {
             offer.setStatementId(statementId);
         }
-    }
-
-    @Override
-    public void calculateCredit(UUID statementId, FinishRegistrationRequestDto request) {
-        log.info("Calculating loan for statementId: {} with request: {}", statementId, request);
-        Statement statement = statementRepository.getReferenceById(statementId);
-        ScoringDataDto scoringData = scoringMapper.mapToScoring(request, statement);
-        log.info("Scoring data created: {}", scoringData);
-
-        CreditDto creditDto = feignCalculatorService.calculateCredit(scoringData);
-        log.info("Credit data calculated: {}", creditDto);
-
-        Credit credit = creditMapper.mapToCredit(creditDto);
-        log.info("Credit created: {}", credit);
-        creditRepository.save(credit);
-
-        Client client = clientRepository.getReferenceById(statement.getClientId().getClientId());
-        updateClientFromScoringData(client, scoringData);
-        clientRepository.save(client);
-
-        updateStatement(statement, credit);
-        log.info("Loan calculated and credit created successfully.");
     }
 
     public Client updateClientFromScoringData(Client client, ScoringDataDto scoringData) {
@@ -162,5 +132,76 @@ public class DealServiceImpl implements DealService {
 
         return client;
     }
+
+    @Override
+    public void calculateCredit(UUID statementId, FinishRegistrationRequestDto request) {
+        log.info("Calculating loan for statementId: {} with request: {}", statementId, request);
+        Statement statement = statementRepository.getReferenceById(statementId);
+        ScoringDataDto scoringData = scoringMapper.mapToScoring(request, statement);
+        log.info("Scoring data created: {}", scoringData);
+
+        CreditDto creditDto = feignCalculatorService.calculateCredit(scoringData);
+        log.info("Credit data calculated: {}", creditDto);
+
+        Credit credit = creditMapper.mapToCredit(creditDto);
+        log.info("Credit created: {}", credit);
+        creditRepository.save(credit);
+
+        Client client = clientRepository.getReferenceById(statement.getClientId().getClientId());
+        updateClientFromScoringData(client, scoringData);
+        clientRepository.save(client);
+
+        updateStatement(statement, credit);
+        statement.setCreditId(credit);
+
+        statementRepository.save(statement);
+
+        log.info("Loan calculated and credit created successfully.");
+
+        kafkaDocumentService.createDocuments(statementId);
+    }
+
+    @Override
+    public void updateStatementStatus(UUID statementId, ApplicationStatus applicationStatus, ChangeType changeType) {
+        Statement statement = statementRepository.getReferenceById(statementId);
+        statement.setStatus(applicationStatus);
+
+        StatusHistory statusHistory = StatusHistory.builder()
+                .statusType(applicationStatus)
+                .time(LocalDateTime.now())
+                .changeType(changeType)
+                .build();
+
+        List<StatusHistory> list = statement.getStatusHistory();
+        list.add(statusHistory);
+
+        statement.setStatusHistory(list);
+        statementRepository.save(statement);
+    }
+
+    @Override
+    public void sendDocumentToKafka(UUID statementId) {
+        updateStatementStatus(statementId, ApplicationStatus.PREPARE_DOCUMENTS, ChangeType.AUTOMATIC);
+        kafkaDocumentService.sendDocuments(statementId);
+    }
+
+    @Override
+    public void sendSesToKafka(UUID statementId) {
+        Statement statement = statementRepository.getReferenceById(statementId);
+        updateStatementStatus(statementId, ApplicationStatus.DOCUMENT_CREATED, ChangeType.AUTOMATIC);
+        statement.setSesCode(RandomStringUtils.randomAlphanumeric(6).toUpperCase());
+        statementRepository.save(statement);
+        kafkaDocumentService.sendSes(statementId);
+    }
+
+    @Override
+    public void sendCreditIssued(UUID statementId) {
+        Statement statement = statementRepository.getReferenceById(statementId);
+        updateStatementStatus(statementId, ApplicationStatus.CREDIT_ISSUED, ChangeType.AUTOMATIC);
+        statement.setSignDate(LocalDateTime.now());
+        statementRepository.save(statement);
+        kafkaDocumentService.creditIssued(statementId);
+    }
+
 
 }

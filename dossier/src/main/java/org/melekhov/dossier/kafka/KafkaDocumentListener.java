@@ -14,17 +14,46 @@ public class KafkaDocumentListener {
 
     private final EmailSenderService emailSenderService;
 
-    @KafkaListener(groupId = "${spring.kafka.consumer.group-id}",
-            topics = {"finish-registration",
-                    "create-documents",
-                    "send-documents",
-                    "send-ses",
-                    "credit-issued",
-                    "statement-denied"},
+    @KafkaListener(topics = "finish-registration",
+            groupId = "${spring.kafka.consumer.group-id}",
             containerFactory = "messageKafkaListenerContainerFactory")
-    public void messageListener(EmailMessageDto msg) {
-        emailSenderService.send(msg, String.valueOf(msg.getTheme()));
+    public void finishRegistrationListener(EmailMessageDto msg) {
+        emailSenderService.send(msg, "Вам предварительно одбрен кредит, завершите заполнение данных");
+    }
+
+    @KafkaListener(topics = "create-documents",
+            groupId = "${spring.kafka.consumer.group-id}",
+            containerFactory = "messageKafkaListenerContainerFactory")
+    public void createDocumentsListener(EmailMessageDto msg) {
         log.info("Received message: {}. Topic={}", msg, msg.getTheme());
+    }
+
+    @KafkaListener(topics = "send-documents",
+            groupId = "${spring.kafka.consumer.group-id}",
+            containerFactory = "messageKafkaListenerContainerFactory")
+    public void sendDocumentsListener(EmailMessageDto msg) {
+        emailSenderService.send(msg, "Вам предварительно одбрен кредит, завершите заполнение данных");
+    }
+
+    @KafkaListener(topics = "send-ses",
+            groupId = "${spring.kafka.consumer.group-id}",
+            containerFactory = "messageKafkaListenerContainerFactory")
+    public void sendSesListener(EmailMessageDto msg) {
+        emailSenderService.send(msg, "Код подтверждения: ");
+    }
+
+    @KafkaListener(topics = "credit-issued",
+            groupId = "${spring.kafka.consumer.group-id}",
+            containerFactory = "messageKafkaListenerContainerFactory")
+    public void creditIssuedListener(EmailMessageDto msg) {
+        emailSenderService.send(msg, "Вы успешно выдан кредит");
+    }
+
+    @KafkaListener(topics = "statement-denied",
+            groupId = "${spring.kafka.consumer.group-id}",
+            containerFactory = "messageKafkaListenerContainerFactory")
+    public void statementDeniedListener(EmailMessageDto msg) {
+        emailSenderService.send(msg, "Вам отказано в кредите");
     }
 
 }
