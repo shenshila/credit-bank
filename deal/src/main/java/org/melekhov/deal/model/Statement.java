@@ -2,6 +2,7 @@ package org.melekhov.deal.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 import org.melekhov.deal.model.enums.ApplicationStatus;
@@ -47,6 +48,10 @@ public class Statement {
     private String sesCode;
 
     @Column(name = "status_history", columnDefinition = "jsonb")
-    @ElementCollection
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Builder.Default
     private List<StatusHistory> statusHistory = new ArrayList<>();
+
 }
+
+

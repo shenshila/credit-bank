@@ -2,6 +2,8 @@ package org.melekhov.deal.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import org.melekhov.deal.model.jsonb.Employment;
 import org.melekhov.deal.model.jsonb.Passport;
 import org.melekhov.shareddto.enums.Gender;
@@ -49,11 +51,11 @@ public class Client {
     private Integer dependentAmount;
 
     @Column(columnDefinition = "jsonb", name = "passport_id")
-    @Embedded
+    @JdbcTypeCode(SqlTypes.JSON)
     private Passport passport;
 
     @Column(columnDefinition = "jsonb", name = "employment_id")
-    @Embedded
+    @JdbcTypeCode(SqlTypes.JSON)
     private Employment employment;
 
     @Column(name = "account_number")

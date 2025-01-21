@@ -18,17 +18,31 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class KafkaDocumentServiceImpl implements KafkaDocumentService {
 
-//    private final KafkaTemplate<String, EmailMessageDto> messageKafkaTemplate;
-//    private final KafkaTemplate<String, String> kafkaTemplateTest;
     private final StatementRepository statementRepository;
     private final KafkaTemplate<String, EmailMessageDto> emailMessageKafkaTemplate;
 
     @Override
-    public void sendDocument(UUID statementId) {
+    public void finishRegistration(UUID statementId) {
         log.info("Sending message to finish-registration topic for statementId={}", statementId);
         EmailMessageDto emailMessage = createEmailMessage(statementId, Theme.FINISH_REGISTRATION);
 
         emailMessageKafkaTemplate.send("finish-registration", emailMessage);
+    }
+
+    @Override
+    public void createDocuments(UUID statementId) {
+        log.info("Sending message to create-documents topic for statementId={}", statementId);
+        EmailMessageDto emailMessage = createEmailMessage(statementId, Theme.CREATE_DOCUMENTS);
+
+        emailMessageKafkaTemplate.send("create-documents", emailMessage);
+    }
+
+    @Override
+    public void sendDocuments(UUID statementId) {
+        log.info("Sending message to send-documents topic for statementId={}", statementId);
+        EmailMessageDto emailMessage = createEmailMessage(statementId, Theme.SEND_DOCUMENTS);
+
+        emailMessageKafkaTemplate.send("send-documents", emailMessage);
     }
 
     @Override
@@ -47,6 +61,14 @@ public class KafkaDocumentServiceImpl implements KafkaDocumentService {
         emailMessageKafkaTemplate.send("credit-issued", emailMessage);
     }
 
+    @Override
+    public void statementDenied(UUID statementId) {
+        log.info("Sending message to statement-denied topic for statementId={}", statementId);
+        EmailMessageDto emailMessage = createEmailMessage(statementId, Theme.STATEMENT_DENIED);
+
+        emailMessageKafkaTemplate.send("statement-denied", emailMessage);
+    }
+
     private EmailMessageDto createEmailMessage(UUID statementId, Theme theme) {
         log.info("Creating email message");
         Optional<Statement> statement = statementRepository.findById(statementId);
@@ -57,30 +79,5 @@ public class KafkaDocumentServiceImpl implements KafkaDocumentService {
                 .theme(theme)
                 .build();
     }
-
-
-    //    public void sendJsonMessage(EmailMessageDto message) {
-//        log.info("Sending Json Serializer: {}", message);
-//        log.info("-------------------------------");
-//
-//        messageKafkaTemplate.send("messages", message);
-//    }
-
-//    @Override
-//    public void sendTestMessage(String message) {
-//        log.info("Sending: {}", message);
-//        log.info("-------------------------");
-//
-//        kafkaTemplateTest.send("test", message);
-//    }
-
-
-//    @Override
-//    public void sendDocument(UUID statementId, EmailMessageDto emailMessageDto) {
-//        log.info("Sending: {}", statementId);
-//        log.info("-------------------------");
-//
-//        kafkaTemplate.send("testDto", emailMessageDto);
-//    }
 
 }

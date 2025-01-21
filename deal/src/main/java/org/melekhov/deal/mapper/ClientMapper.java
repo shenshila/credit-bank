@@ -5,7 +5,10 @@ import org.melekhov.deal.model.Client;
 import org.melekhov.deal.model.jsonb.Employment;
 import org.melekhov.deal.model.jsonb.Passport;
 import org.melekhov.shareddto.dto.LoanStatementRequestDto;
+import org.melekhov.shareddto.dto.ScoringDataDto;
 import org.springframework.stereotype.Component;
+
+import java.util.UUID;
 
 @Component
 @Slf4j

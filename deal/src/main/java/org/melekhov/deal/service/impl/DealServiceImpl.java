@@ -1,7 +1,5 @@
 package org.melekhov.deal.service.impl;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.melekhov.deal.dto.CreditDto;
@@ -15,12 +13,14 @@ import org.melekhov.deal.model.Credit;
 import org.melekhov.deal.model.Statement;
 import org.melekhov.deal.model.enums.ApplicationStatus;
 import org.melekhov.deal.model.enums.ChangeType;
+import org.melekhov.deal.model.jsonb.Employment;
+import org.melekhov.deal.model.jsonb.Passport;
 import org.melekhov.deal.model.jsonb.StatusHistory;
 import org.melekhov.deal.repository.ClientRepository;
 import org.melekhov.deal.repository.CreditRepository;
 import org.melekhov.deal.repository.StatementRepository;
 import org.melekhov.deal.service.DealService;
-//import org.melekhov.shareddto.dto.*;
+import org.melekhov.deal.service.KafkaDocumentService;
 import org.melekhov.shareddto.dto.FinishRegistrationRequestDto;
 import org.melekhov.shareddto.dto.LoanOfferDto;
 import org.melekhov.shareddto.dto.LoanStatementRequestDto;
@@ -46,6 +46,7 @@ public class DealServiceImpl implements DealService {
     private final CreditRepository creditRepository;
 
     private final FeignCalculatorService feignCalculatorService;
+    private final KafkaDocumentService kafkaDocumentService;
 
     @Override
     public List<LoanOfferDto> calculateLoanOffer(LoanStatementRequestDto request) {
@@ -53,8 +54,7 @@ public class DealServiceImpl implements DealService {
         Client client = clientMapper.mapToClient(request);
         client = clientRepository.save(client);
 
-        Statement statement = statementMapper.mapToStatement(request, client);
-
+        Statement statement = statementMapper.mapToStatement(client);
         statement = statementRepository.save(statement);
 
         List<LoanOfferDto> offers = feignCalculatorService.getLoanOffers(request);
@@ -79,16 +79,16 @@ public class DealServiceImpl implements DealService {
                 .changeType(ChangeType.AUTOMATIC)
                 .build();
 
+
         List<StatusHistory> list = statement.getStatusHistory();
         list.add(statusHistory);
-        statement.setStatusHistory(list);
 
         statement.setStatus(statusHistory.getStatusType());
         statement.setAppliedOffer(request);
         statementRepository.save(statement);
     }
 
-    public void updateStatement(Statement statement) {
+    public void updateStatement(Statement statement, Credit credit) {
         StatusHistory statusHistory = StatusHistory.builder()
                 .statusType(ApplicationStatus.APPROVAL)
                 .time(LocalDateTime.now())
@@ -98,6 +98,7 @@ public class DealServiceImpl implements DealService {
         List<StatusHistory> list = statement.getStatusHistory();
         list.add(statusHistory);
         statement.setStatusHistory(list);
+        statement.setCreditId(credit);
 
         statementRepository.save(statement);
     }
@@ -122,7 +123,44 @@ public class DealServiceImpl implements DealService {
         log.info("Credit created: {}", credit);
         creditRepository.save(credit);
 
-        updateStatement(statement);
+        Client client = clientRepository.getReferenceById(statement.getClientId().getClientId());
+        updateClientFromScoringData(client, scoringData);
+        clientRepository.save(client);
+
+        updateStatement(statement, credit);
         log.info("Loan calculated and credit created successfully.");
     }
+
+    public Client updateClientFromScoringData(Client client, ScoringDataDto scoringData) {
+        log.info("Updating existing client with scoring data: {}", scoringData);
+
+        client.setAccountNumber(scoringData.getAccountNumber());
+        client.setDependentAmount(scoringData.getDependentAmount());
+
+        Employment employment = client.getEmployment() != null
+                ? client.getEmployment()
+                : new Employment();
+        employment.setEmployment(client.getClientId());
+        employment.setSalary(scoringData.getEmployment().getSalary());
+        employment.setStatus(scoringData.getEmployment().getEmploymentStatus());
+        employment.setPosition(scoringData.getEmployment().getPosition());
+        employment.setEmployerINN(scoringData.getEmployment().getEmployerINN());
+        employment.setWorkExperienceTotal(scoringData.getEmployment().getWorkExperienceTotal());
+        employment.setWorkExperienceCurrent(scoringData.getEmployment().getWorkExperienceCurrent());
+        client.setEmployment(employment);
+
+        client.setGender(scoringData.getGender());
+        client.setMaritalStatus(scoringData.getMaritalStatus());
+
+        Passport passport = client.getPassport() != null
+                ? client.getPassport()
+                : new Passport();
+        passport.setPassport(UUID.randomUUID());
+        passport.setIssueBranch(scoringData.getPassportIssueBranch());
+        passport.setIssueDate(scoringData.getPassportIssueDate());
+        client.setPassport(passport);
+
+        return client;
+    }
+
 }

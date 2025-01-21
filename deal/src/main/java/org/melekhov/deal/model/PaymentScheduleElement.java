@@ -1,11 +1,6 @@
-package org.melekhov.deal.dto;
+package org.melekhov.deal.model;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Embeddable;
-import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,7 +14,7 @@ import java.time.LocalDate;
 @Embeddable
 @AllArgsConstructor
 @NoArgsConstructor
-public class PaymentScheduleElementDto {
+public class PaymentScheduleElement {
 
 //    @NotNull(message = "Number cannot be null")
 //    @Min(value = 1, message = "Number must be at least 1")

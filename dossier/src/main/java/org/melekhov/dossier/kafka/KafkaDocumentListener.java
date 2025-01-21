@@ -16,20 +16,15 @@ public class KafkaDocumentListener {
 
     @KafkaListener(groupId = "${spring.kafka.consumer.group-id}",
             topics = {"finish-registration",
+                    "create-documents",
+                    "send-documents",
                     "send-ses",
-                    "credit-issued"},
+                    "credit-issued",
+                    "statement-denied"},
             containerFactory = "messageKafkaListenerContainerFactory")
     public void messageListener(EmailMessageDto msg) {
         emailSenderService.send(msg, String.valueOf(msg.getTheme()));
-        log.info("Received message: {}", msg);
-//        System.out.println("Received message: " + msg);
+        log.info("Received message: {}. Topic={}", msg, msg.getTheme());
     }
-
-//    @KafkaListener(topics = "test", groupId = "testGroup")
-//    void testListener(String msg) {
-////        log.info("Received message: {}", msg);
-//        System.out.println("Received message: " + msg);
-//    }
-
 
 }

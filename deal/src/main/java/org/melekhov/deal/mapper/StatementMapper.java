@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Component
 public class StatementMapper {
 
-    public Statement mapToStatement(LoanStatementRequestDto request, Client client) {
+    public Statement mapToStatement(Client client) {
 
         Statement statement = Statement.builder()
                 .createdOn(LocalDateTime.now())

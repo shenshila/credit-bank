@@ -17,10 +17,12 @@ public class DocumentController {
 
     private final KafkaDocumentService kafkaDocumentService;
 
+
+
     @PostMapping("/{statementId}/send")
     public ResponseEntity<Void> sendDocument(@PathVariable UUID statementId) {
         log.info("Send document: StatementId={}", statementId);
-        kafkaDocumentService.sendDocument(statementId);
+        kafkaDocumentService.finishRegistration(statementId);
 
         return ResponseEntity.ok().build();
     }
