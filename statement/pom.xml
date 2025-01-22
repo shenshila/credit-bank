@@ -32,6 +32,7 @@
         <spring-cloud.version>2023.0.2</spring-cloud.version>
         <maven-compiler.version>3.11.0</maven-compiler.version>
         <lombok.version>1.18.30</lombok.version>
+        <dto.version>0.0.1-SNAPSHOT</dto.version>
     </properties>
     <dependencies>
         <dependency>
@@ -77,7 +78,7 @@
         <dependency>
             <groupId>org.melekhov</groupId>
             <artifactId>shared-dto</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${dto.version}</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
