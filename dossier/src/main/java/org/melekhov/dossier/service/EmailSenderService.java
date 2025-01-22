@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface EmailSenderService {
 
-    public void send(EmailMessageDto emailMessageDto, String text);
+    void send(EmailMessageDto emailMessageDto, String text);
+    void send(EmailMessageDto emailMessageDto, String text, byte[] pdfContent);
 
 }

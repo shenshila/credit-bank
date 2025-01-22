@@ -4,7 +4,9 @@ import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.melekhov.dossier.service.EmailSenderService;
+import org.melekhov.dossier.service.PdfGenerator;
 import org.melekhov.shareddto.dto.EmailMessageDto;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -36,25 +38,25 @@ public class EmailSenderServiceImpl implements EmailSenderService {
         log.info("Email send to {} with subject {}", emailMessageDto.getAddress(), text);
     }
 
-//    public void sendEmailWithAttachment(EmailMessageDto emailMessageDto, String text) throws MessagingException, FileNotFoundException {
-//        try {
-//            MimeMessage mimeMessage = mailSender.createMimeMessage();
-//
-//            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true);
-//
-//            messageHelper.setFrom("${spring.mail.username}");
-//            messageHelper.setTo(emailMessageDto.getAddress());
-//            messageHelper.setSubject(text);
-//            messageHelper.setText(String.valueOf(emailMessageDto.getStatementId()));
-//
-//            FileSystemResource file = new File();
-//            messageHelper.addAttachment("Purchase Order", file);
-//
-//            mailSender.send(mimeMessage);
-//            log.info("Email send to {} with subject {}", emailMessageDto.getAddress(), text);
-//        } catch (jakarta.mail.MessagingException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
+    @Override
+    public void send(EmailMessageDto msg, String text, byte[] pdfContent) {
+
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+            helper.setFrom("${spring.mail.username}");
+            helper.setTo(msg.getAddress());
+            helper.setSubject(text);
+            helper.setText(String.valueOf(msg.getStatementId()));
+
+            helper.addAttachment("LoanStatement.pdf", new ByteArrayResource(pdfContent));
+
+            mailSender.send(message);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

@@ -3,6 +3,7 @@ package org.melekhov.dossier.kafka;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.melekhov.dossier.service.EmailSenderService;
+import org.melekhov.dossier.service.PdfGenerator;
 import org.melekhov.shareddto.dto.EmailMessageDto;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
@@ -12,7 +13,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class KafkaDocumentListener {
 
+    private final PdfGenerator pdfGenerator;
     private final EmailSenderService emailSenderService;
+
+    private byte[] pdfContent;
 
     @KafkaListener(topics = "finish-registration",
             groupId = "${spring.kafka.consumer.group-id}",
@@ -25,6 +29,7 @@ public class KafkaDocumentListener {
             groupId = "${spring.kafka.consumer.group-id}",
             containerFactory = "messageKafkaListenerContainerFactory")
     public void createDocumentsListener(EmailMessageDto msg) {
+        pdfContent = pdfGenerator.generateStatementPdf(msg);
         log.info("Received message: {}. Topic={}", msg, msg.getTheme());
     }
 
@@ -32,7 +37,7 @@ public class KafkaDocumentListener {
             groupId = "${spring.kafka.consumer.group-id}",
             containerFactory = "messageKafkaListenerContainerFactory")
     public void sendDocumentsListener(EmailMessageDto msg) {
-        emailSenderService.send(msg, "Вам предварительно одбрен кредит, завершите заполнение данных");
+        emailSenderService.send(msg, "Вам предварительно одбрен кредит, завершите заполнение данных", pdfContent);
     }
 
     @KafkaListener(topics = "send-ses",
