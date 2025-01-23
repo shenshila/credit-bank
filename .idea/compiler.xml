@@ -9,16 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="calculator" />
       </profile>
-      <profile name="Annotation profile for statement" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
-        </processorPath>
-        <module name="statement" />
-      </profile>
-      <profile name="Annotation profile for credit-bank" enabled="true">
+      <profile name="Annotation profile for gateway" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -30,6 +21,17 @@
         </processorPath>
         <module name="dossier" />
         <module name="deal" />
+        <module name="shared-dto" />
+        <module name="gateway" />
+      </profile>
+      <profile name="Annotation profile for credit-bank" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
+        </processorPath>
+        <module name="statement" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -42,6 +44,7 @@
       <module name="deal" options="-parameters" />
       <module name="dossier" options="-parameters" />
       <module name="dto" options="-parameters" />
+      <module name="gateway" options="-parameters" />
       <module name="shared-dto" options="-parameters" />
       <module name="statement" options="-parameters" />
     </option>
