@@ -2,14 +2,12 @@ package org.melekhov.deal.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.JdbcType;
 import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.annotations.Type;
 import org.hibernate.type.SqlTypes;
-import org.melekhov.deal.model.enums.Gender;
-import org.melekhov.deal.model.enums.MaritalStatus;
 import org.melekhov.deal.model.jsonb.Employment;
 import org.melekhov.deal.model.jsonb.Passport;
+import org.melekhov.shareddto.enums.Gender;
+import org.melekhov.shareddto.enums.MaritalStatus;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -53,11 +51,11 @@ public class Client {
     private Integer dependentAmount;
 
     @Column(columnDefinition = "jsonb", name = "passport_id")
-    @Embedded
+    @JdbcTypeCode(SqlTypes.JSON)
     private Passport passport;
 
     @Column(columnDefinition = "jsonb", name = "employment_id")
-    @Embedded
+    @JdbcTypeCode(SqlTypes.JSON)
     private Employment employment;
 
     @Column(name = "account_number")

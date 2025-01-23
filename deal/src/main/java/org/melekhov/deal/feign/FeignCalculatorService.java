@@ -1,15 +1,12 @@
 package org.melekhov.deal.feign;
 
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.melekhov.deal.dto.CreditDto;
-import org.melekhov.deal.dto.LoanOfferDto;
-import org.melekhov.deal.dto.LoanStatementRequestDto;
-import org.melekhov.deal.dto.ScoringDataDto;
+import org.melekhov.shareddto.dto.LoanOfferDto;
+import org.melekhov.shareddto.dto.LoanStatementRequestDto;
+import org.melekhov.shareddto.dto.ScoringDataDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class FeignCalculatorService {

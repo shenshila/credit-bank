@@ -1,7 +1,7 @@
 package org.melekhov.statement.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.melekhov.statement.dto.LoanStatementRequestDto;
+import org.melekhov.shareddto.dto.LoanStatementRequestDto;
 import org.melekhov.statement.service.PreScoringService;
 import org.springframework.stereotype.Service;
 

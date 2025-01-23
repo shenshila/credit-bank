@@ -3,22 +3,24 @@ package org.melekhov.calculator.service;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.melekhov.calculator.dto.*;
-import org.melekhov.calculator.dto.enums.EmploymentStatus;
-import org.melekhov.calculator.dto.enums.Gender;
-import org.melekhov.calculator.dto.enums.MaritalStatus;
-import org.melekhov.calculator.dto.enums.Position;
 import org.melekhov.calculator.service.impl.OfferServiceImpl;
+import org.melekhov.calculator.service.impl.UserValidServiceImpl;
+import org.melekhov.shareddto.dto.*;
+import org.melekhov.shareddto.enums.EmploymentStatus;
+import org.melekhov.shareddto.enums.Gender;
+import org.melekhov.shareddto.enums.MaritalStatus;
+import org.melekhov.shareddto.enums.Position;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,10 +32,11 @@ public class OfferServiceImplTest {
     @InjectMocks
     private OfferServiceImpl offerService;
 
-    @BeforeEach
-    void setUp() {
-        ReflectionTestUtils.setField(offerService, "BASE_RATE", BigDecimal.valueOf(15));
-    }
+    @Mock
+    private UserValidService userValidService;
+
+    @Mock
+    private CalculateService calculateService;
 
     @Test
     void createOffersList_generatesFourOffers() {
@@ -49,7 +52,16 @@ public class OfferServiceImplTest {
                 .passportNumber("123456")
                 .build();
 
+        // Мокаем вызовы
+        Mockito.when(calculateService.calcRate(Mockito.anyBoolean(), Mockito.anyBoolean()))
+                .thenReturn(BigDecimal.valueOf(12));
+        Mockito.when(calculateService.calcTotalAmount(Mockito.any(), Mockito.anyBoolean()))
+                .thenReturn(BigDecimal.valueOf(110000));
+        Mockito.when(calculateService.calcMonthlyPayment(Mockito.any(), Mockito.any(), Mockito.anyInt()))
+                .thenReturn(BigDecimal.valueOf(10000));
+
         List<LoanOfferDto> offers = offerService.createOffersList(requestDto);
+
         assertEquals(4, offers.size());
         assertNotNull(offers.get(0).getStatementId());
     }
@@ -85,12 +97,25 @@ public class OfferServiceImplTest {
                 .isSalaryClient(false)
                 .build();
 
-        CreditDto response = offerService.calculateCredit(scoringDataDto);
-        assertEquals(HttpStatus.OK, ResponseEntity.status(HttpStatus.OK).body(response));
-        CreditDto credit = ResponseEntity.status(HttpStatus.OK).body(response).getBody();
+        // Мокаем вызовы
+        Mockito.doNothing().when(userValidService).checkClientSolvency(scoringDataDto);
+        Mockito.when(calculateService.calcRate(Mockito.anyBoolean(), Mockito.anyBoolean()))
+                .thenReturn(BigDecimal.valueOf(13.5));
+        Mockito.when(calculateService.calcTotalAmount(Mockito.any(), Mockito.anyBoolean()))
+                .thenReturn(BigDecimal.valueOf(660000.00));
+        Mockito.when(calculateService.calcMonthlyPayment(Mockito.any(), Mockito.any(), Mockito.anyInt()))
+                .thenReturn(BigDecimal.valueOf(35000.00));
+        Mockito.when(calculateService.calcPsk(Mockito.any(), Mockito.any(), Mockito.anyInt()))
+                .thenReturn(BigDecimal.valueOf(14.0));
+        Mockito.when(calculateService.calculatePaymentSchedule(Mockito.anyInt(), Mockito.any(), Mockito.any(), Mockito.any()))
+                .thenReturn(Collections.emptyList());
+
+        CreditDto credit = offerService.calculateCredit(scoringDataDto);
+
         assertNotNull(credit);
         assertEquals(BigDecimal.valueOf(660000.0), credit.getAmount());
         assertEquals(19, credit.getTerm());
     }
 
 }
+

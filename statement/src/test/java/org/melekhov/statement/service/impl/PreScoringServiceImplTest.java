@@ -2,7 +2,7 @@ package org.melekhov.statement.service.impl;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.melekhov.statement.dto.LoanStatementRequestDto;
+import org.melekhov.shareddto.dto.LoanStatementRequestDto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

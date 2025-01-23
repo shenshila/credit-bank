@@ -9,10 +9,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.melekhov.deal.dto.FinishRegistrationRequestDto;
-import org.melekhov.deal.dto.LoanOfferDto;
-import org.melekhov.deal.dto.LoanStatementRequestDto;
 import org.melekhov.deal.service.DealService;
+import org.melekhov.shareddto.dto.FinishRegistrationRequestDto;
+import org.melekhov.shareddto.dto.LoanOfferDto;
+import org.melekhov.shareddto.dto.LoanStatementRequestDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -62,7 +62,7 @@ public class DealController {
     })
     @PostMapping("/calculate/{statementId}")
     public ResponseEntity<Void> calculateCredit(@PathVariable("statementId") UUID statementId,
-                                                      @RequestBody FinishRegistrationRequestDto finishRegistrationRequest) {
+                                                @RequestBody FinishRegistrationRequestDto finishRegistrationRequest) {
         log.info("Received credit request: {}", finishRegistrationRequest);
         dealService.calculateCredit(statementId, finishRegistrationRequest);
         return ResponseEntity.ok().build();

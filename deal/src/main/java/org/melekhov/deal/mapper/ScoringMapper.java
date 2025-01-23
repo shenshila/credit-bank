@@ -1,15 +1,17 @@
 package org.melekhov.deal.mapper;
 
-import org.melekhov.deal.dto.FinishRegistrationRequestDto;
-import org.melekhov.deal.dto.ScoringDataDto;
+import lombok.extern.slf4j.Slf4j;
 import org.melekhov.deal.model.Statement;
+import org.melekhov.shareddto.dto.FinishRegistrationRequestDto;
+import org.melekhov.shareddto.dto.ScoringDataDto;
 import org.springframework.stereotype.Component;
 
 @Component
+@Slf4j
 public class ScoringMapper {
 
     public ScoringDataDto mapToScoring(FinishRegistrationRequestDto request, Statement statement) {
-
+        log.info("Creating new scoring data with request={} and statement={}", request, statement);
         ScoringDataDto scoringData = ScoringDataDto.builder()
                 .gender(request.getGender())
                 .maritalStatus(request.getMaritalStatus())

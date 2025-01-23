@@ -2,7 +2,6 @@ package org.melekhov.deal.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.melekhov.deal.dto.PaymentScheduleElementDto;
 import org.melekhov.deal.model.enums.CreditStatus;
 
 import java.math.BigDecimal;
@@ -36,9 +35,12 @@ public class Credit {
     @Column(name = "psk")
     private BigDecimal fullAmount;
 
-    @Column(name = "payment_schedule")
     @ElementCollection
-    private List<PaymentScheduleElementDto> paymentSchedule;
+    @CollectionTable(
+            name = "payment_schedule",
+            joinColumns = @JoinColumn(name = "credit_id")
+    )
+    private List<PaymentScheduleElement> paymentSchedule;
 
     @Column(name = "insurance_enabled")
     private Boolean isInsuranceEnabled;

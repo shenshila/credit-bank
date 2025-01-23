@@ -1,10 +1,10 @@
 package org.melekhov.deal.mapper;
 
 import lombok.extern.slf4j.Slf4j;
-import org.melekhov.deal.dto.LoanStatementRequestDto;
 import org.melekhov.deal.model.Client;
 import org.melekhov.deal.model.jsonb.Employment;
 import org.melekhov.deal.model.jsonb.Passport;
+import org.melekhov.shareddto.dto.LoanStatementRequestDto;
 import org.springframework.stereotype.Component;
 
 @Component

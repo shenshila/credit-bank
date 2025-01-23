@@ -1,7 +1,7 @@
 package org.melekhov.calculator.service;
 
-import org.melekhov.calculator.dto.LoanStatementRequestDto;
-import org.melekhov.calculator.dto.ScoringDataDto;
+import org.melekhov.shareddto.dto.LoanStatementRequestDto;
+import org.melekhov.shareddto.dto.ScoringDataDto;
 import org.springframework.stereotype.Service;
 
 @Service

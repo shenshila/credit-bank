@@ -2,10 +2,10 @@ package org.melekhov.statement.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.melekhov.shareddto.dto.LoanOfferDto;
+import org.melekhov.shareddto.dto.LoanStatementRequestDto;
 import org.melekhov.statement.service.PreScoringService;
 import org.melekhov.statement.service.StatementService;
-import org.melekhov.statement.dto.LoanOfferDto;
-import org.melekhov.statement.dto.LoanStatementRequestDto;
 import org.melekhov.statement.feign.FeignDealControllerClient;
 import org.springframework.stereotype.Service;
 

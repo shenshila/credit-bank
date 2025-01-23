@@ -4,9 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
-import org.melekhov.deal.dto.LoanOfferDto;
 import org.melekhov.deal.model.enums.ApplicationStatus;
 import org.melekhov.deal.model.jsonb.StatusHistory;
+import org.melekhov.shareddto.dto.LoanOfferDto;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -47,6 +47,10 @@ public class Statement {
     private String sesCode;
 
     @Column(name = "status_history", columnDefinition = "jsonb")
-    @ElementCollection
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Builder.Default
     private List<StatusHistory> statusHistory = new ArrayList<>();
+
 }
+
+

@@ -2,13 +2,12 @@ package org.melekhov.calculator.controller;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.melekhov.calculator.dto.*;
-import org.melekhov.calculator.dto.enums.EmploymentStatus;
-import org.melekhov.calculator.dto.enums.Gender;
-import org.melekhov.calculator.dto.enums.MaritalStatus;
-import org.melekhov.calculator.dto.enums.Position;
 import org.melekhov.calculator.service.impl.OfferServiceImpl;
-import org.melekhov.calculator.service.impl.ScoringServiceImpl;
+import org.melekhov.shareddto.dto.*;
+import org.melekhov.shareddto.enums.EmploymentStatus;
+import org.melekhov.shareddto.enums.Gender;
+import org.melekhov.shareddto.enums.MaritalStatus;
+import org.melekhov.shareddto.enums.Position;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;

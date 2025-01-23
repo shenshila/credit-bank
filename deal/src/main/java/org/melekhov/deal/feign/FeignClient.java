@@ -1,12 +1,10 @@
 package org.melekhov.deal.feign;
 
 import org.melekhov.deal.dto.CreditDto;
-import org.melekhov.deal.dto.LoanOfferDto;
-import org.melekhov.deal.dto.LoanStatementRequestDto;
-import org.melekhov.deal.dto.ScoringDataDto;
-import org.melekhov.deal.model.Credit;
+import org.melekhov.shareddto.dto.LoanOfferDto;
+import org.melekhov.shareddto.dto.LoanStatementRequestDto;
+import org.melekhov.shareddto.dto.ScoringDataDto;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 

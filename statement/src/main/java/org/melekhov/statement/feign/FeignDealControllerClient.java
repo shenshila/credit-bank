@@ -1,7 +1,7 @@
 package org.melekhov.statement.feign;
 
-import org.melekhov.statement.dto.LoanOfferDto;
-import org.melekhov.statement.dto.LoanStatementRequestDto;
+import org.melekhov.shareddto.dto.LoanOfferDto;
+import org.melekhov.shareddto.dto.LoanStatementRequestDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
