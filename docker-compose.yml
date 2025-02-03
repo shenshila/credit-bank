@@ -6,7 +6,7 @@ services:
     ports:
       - "22181:2181"
     env_file:
-      - .env
+      - kafka.env
   kafka:
     user: root
     image: confluentinc/cp-kafka:7.4.4
@@ -16,5 +16,24 @@ services:
       - "9093:9093"
       - "9092:9092"
     env_file:
-      - .env
+      - kafka.env
 
+  postgres:
+    image: 'postges:15'
+    container_name: 'postgres'
+    ports:
+      - "5432:5432"
+    env_file:
+      - db.env
+    networks:
+      - mynetwork
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+networks:
+  mynetwork:
+    driver: bridge
+
+volumes:
+  db-data:
+    driver: local

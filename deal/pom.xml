@@ -6,6 +6,7 @@
 		<groupId>org.melekhov</groupId>
 		<artifactId>credit-bank</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>..</relativePath>
 	</parent>
 
 	<groupId>org.melekhov</groupId>
@@ -157,7 +158,16 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${maven-compiler.version}</version>
 				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
 					<annotationProcessorPaths>
+						<path>
+							<groupId>org.melekhov</groupId>
+							<artifactId>shared-dto</artifactId>
+							<version>${dto.version}</version>
+<!--							<scope>compile</scope>-->
+						</path>
+
 						<path>
 							<groupId>org.mapstruct</groupId>
 							<artifactId>mapstruct-processor</artifactId>
