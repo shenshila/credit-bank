@@ -70,7 +70,7 @@ class StatementControllerTest {
         when(statementService.generateLoanOffers(any(LoanStatementRequestDto.class)))
                 .thenReturn(Collections.singletonList(loanOfferDto));
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/statement")
+        mockMvc.perform(MockMvcRequestBuilders.post("/statement")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(loanStatementRequestDto)))
                 .andExpect(status().isOk())
@@ -81,7 +81,7 @@ class StatementControllerTest {
 
     @Test
     void shouldSelectLoanOffer() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/statement/offer")
+        mockMvc.perform(MockMvcRequestBuilders.post("/statement/offer")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(loanOfferDto)))
                 .andExpect(status().isOk());

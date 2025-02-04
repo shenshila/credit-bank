@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("api/gateway")
+@RequestMapping("/gateway")
 @RequiredArgsConstructor
 @Slf4j
 public class GatewayController {

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 
 @Component
-@FeignClient(name = "statement", url = "http://localhost:8081/api/deal")
+@FeignClient(name = "statement", url = "${other.service.deal.url}")
 public interface FeignDealControllerClient {
 
     @PostMapping("/statement")

@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.melekhov.deal.dto.CreditDto;
-import org.melekhov.deal.feign.FeignCalculatorService;
+import org.melekhov.deal.feign.CalculatorFeignClient;
 import org.melekhov.deal.mapper.ClientMapper;
 import org.melekhov.deal.mapper.CreditMapper;
 import org.melekhov.deal.mapper.ScoringMapper;
@@ -46,7 +46,7 @@ public class DealServiceImpl implements DealService {
     private final StatementRepository statementRepository;
     private final CreditRepository creditRepository;
 
-    private final FeignCalculatorService feignCalculatorService;
+    private final CalculatorFeignClient calculatorFeignClient;
     private final KafkaDocumentService kafkaDocumentService;
 
     @Override
@@ -59,7 +59,7 @@ public class DealServiceImpl implements DealService {
         statement = statementRepository.save(statement);
         updateStatementStatus(statement.getStatementId(), ApplicationStatus.PREAPPROVAL, ChangeType.AUTOMATIC);
 
-        List<LoanOfferDto> offers = feignCalculatorService.getLoanOffers(request);
+        List<LoanOfferDto> offers = calculatorFeignClient.getLoanOffers(request);
         setStatementId(offers, statement.getStatementId());
 
         log.info("Returning loan offers: {}", offers);
@@ -140,7 +140,7 @@ public class DealServiceImpl implements DealService {
         ScoringDataDto scoringData = scoringMapper.mapToScoring(request, statement);
         log.info("Scoring data created: {}", scoringData);
 
-        CreditDto creditDto = feignCalculatorService.calculateCredit(scoringData);
+        CreditDto creditDto = calculatorFeignClient.calculateCredit(scoringData);
         log.info("Credit data calculated: {}", creditDto);
 
         Credit credit = creditMapper.mapToCredit(creditDto);
@@ -182,7 +182,7 @@ public class DealServiceImpl implements DealService {
     @Override
     public void sendDocumentToKafka(UUID statementId) {
         updateStatementStatus(statementId, ApplicationStatus.PREPARE_DOCUMENTS, ChangeType.AUTOMATIC);
-        kafkaDocumentService.sendDocuments(statementId);
+//        kafkaDocumentService.sendDocuments(statementId);
     }
 
     @Override

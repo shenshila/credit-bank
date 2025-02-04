@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/statement")
+@RequestMapping("/statement")
 @RequiredArgsConstructor
 @Tag(name = "Statement Controller", description = "Контроллер для прескоринга, создания предложений и выбора одного предложения")
 @Slf4j

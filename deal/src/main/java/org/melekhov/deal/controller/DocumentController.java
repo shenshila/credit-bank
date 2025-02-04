@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/deal/document/")
+@RequestMapping("/deal/document/")
 @RequiredArgsConstructor
 @Tag(name = "Document Controller", description = "Контроллер для отправки сообщений пользователю на почту")
 @Slf4j

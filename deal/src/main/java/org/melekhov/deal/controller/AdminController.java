@@ -22,7 +22,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/deal/admin/statement")
+@RequestMapping("/deal/admin/statement")
 @Slf4j
 @Tag(name = "Admin Statement API", description = "API для работы с заявками (Statement) в административных целях")
 public class AdminController {

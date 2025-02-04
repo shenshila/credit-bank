@@ -19,7 +19,7 @@ import java.util.List;
 
 @Slf4j
 @RestController()
-@RequestMapping("api/calculator")
+@RequestMapping("/calculator")
 @Tag(name = "Calculator Controller", description = "Контроллер для рассчета кредита")
 @RequiredArgsConstructor
 public class CalculatorController {
