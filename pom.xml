@@ -38,6 +38,8 @@
         <liquibase-hibernate.version>3.6</liquibase-hibernate.version>
         <spring-kafka.version>3.2.4</spring-kafka.version>
         <dto.version>0.0.1-SNAPSHOT</dto.version>
+        <jacoco.version>0.8.4</jacoco.version>
+        <surefire.version>2.22.2</surefire.version>
     </properties>
 
     <build>
@@ -45,7 +47,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.4</version>
+                <version>${jacoco.version}</version>
                 <executions>
                     <execution>
                         <goals>
@@ -65,7 +67,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.2</version>
+                <version>${surefire.version}</version>
                 <configuration>
                     <reportFormat>plain</reportFormat>
                     <includes>
