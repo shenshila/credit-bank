@@ -59,6 +59,7 @@ public class OfferServiceImpl implements OfferService {
         offers.add(generateLoanOffer(request, false, true));
         offers.add(generateLoanOffer(request, false, false));
 
+        log.info("Loan offers list: {}", offers);
         return offers;
     }
 
