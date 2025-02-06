@@ -37,11 +37,12 @@ jobs:
       
     - run: ls
         
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
+    # - name: Build with Maven
+    #   run: mvn -B package --file pom.xml
+    - run: mvn clean install    
 
-    - name: Run tests
-      run: mvn test --file ${{ matrix.service }}/pom.xml
+    # - name: Run tests
+    #   run: mvn test --file ${{ matrix.service }}/pom.xml
 
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v5
